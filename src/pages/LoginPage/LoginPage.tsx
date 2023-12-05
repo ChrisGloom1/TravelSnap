@@ -9,3 +9,5 @@ const LoginPage = () => {
     </View>
   )
 }
+
+export default LoginPage
