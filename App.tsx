@@ -5,5 +5,6 @@ import LoginPage from './src/pages/LoginPage/LoginPage';
 export default function App() {
   return (
     <LoginPage />
+    /** comment */
   );
 }
