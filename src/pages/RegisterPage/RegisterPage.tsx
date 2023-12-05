@@ -2,10 +2,11 @@ import { useState } from "react"
 import { View, Text, TextInput, TouchableOpacity, NativeSyntheticEvent, TextInputChangeEventData } from "react-native"
 
 
-const LoginPage = () => {
+const RegisterPage = () => {
 
   const [emailValue, setEmailValue] = useState<string>('')
   const [passwordValue, setPasswordValue] = useState<string>('')
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState<string>('')
 
   const handleEmailChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     setEmailValue(e.nativeEvent.text)
@@ -13,10 +14,13 @@ const LoginPage = () => {
   const handlePasswordChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     setPasswordValue(e.nativeEvent.text)
   }
+  const handleConfirmPasswordChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    setConfirmPasswordValue(e.nativeEvent.text)
+  }
 
   const handleLoginPress = () => {
     // insert login logic here
-    console.log("user: " + emailValue + " pass: " + passwordValue)
+    console.log("user: " + emailValue + " \npass: " + passwordValue + " \nconfirm pass: " + confirmPasswordValue)
   }
 
   return (
@@ -26,12 +30,13 @@ const LoginPage = () => {
         <Text className="text-5xl mb-9 font-bold">TravelSnap</Text>
         <TextInput className="bg-white rounded-lg w-[90%] p-4 m-2" placeholder="Email" value={emailValue} onChange={handleEmailChange} />
         <TextInput className="bg-white rounded-lg w-[90%] p-4 m-2" placeholder="Password" value={passwordValue} onChange={handlePasswordChange} secureTextEntry={true} />
+        <TextInput className="bg-white rounded-lg w-[90%] p-4 m-2" placeholder="Confirm password" value={confirmPasswordValue} onChange={handleConfirmPasswordChange} secureTextEntry={true} />
         <View className="flex-1 w-[90%] space-x-4 items-center">
           <TouchableOpacity>
-            <Text className="p-4 text-gray-700 font-bold">No user? Click here to create a user</Text>
+            <Text className="p-4 text-gray-700 font-bold">Already have a user? Click here to log in</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleLoginPress}>
-            <Text className="bg-blue-200 rounded-lg p-4 m-4">Log in</Text>
+            <Text className="bg-blue-200 rounded-lg p-4 m-4">Register</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -39,4 +44,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default RegisterPage
