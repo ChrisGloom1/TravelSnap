@@ -1,13 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
-import LoginPage from './src/pages/LoginPage/LoginPage';
-import RegisterPage from './src/pages/RegisterPage/RegisterPage';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FeedImage from './src/components/FeedPost/FeedPost';
 import FeedPost from './src/components/FeedPost/FeedPost';
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
-    <FeedPost />
-    /** comment */
+    // <NavigationContainer>
+      <FeedPost />
+    // </NavigationContainer>
   );
 }
