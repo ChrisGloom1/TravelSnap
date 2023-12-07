@@ -43,6 +43,10 @@ const CameraComponent = () => {
       setImage(result.assets[0].uri)
     }
   }
+  
+  const printImageData = (image: string) => {
+    console.log(image)
+  }
 
   if (hasCameraPermission === null || hasGalleryPermission === null) {
     return <View />
@@ -75,7 +79,7 @@ const CameraComponent = () => {
             </Button>
             <Button
               mode="outlined"
-              // onPress={() => pickImage()}
+              onPress={() => printImageData(image)}
             >
               ✅
             </Button>
