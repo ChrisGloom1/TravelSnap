@@ -4,13 +4,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FeedImage from './src/components/FeedPost/FeedPost';
 import FeedPost from './src/components/FeedPost/FeedPost';
+import CameraComponent from './src/components/CameraComponent/CameraComponent';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     // <NavigationContainer>
-      <FeedPost />
+      <CameraComponent />
     // </NavigationContainer>
   );
 }
