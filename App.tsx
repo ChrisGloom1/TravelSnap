@@ -4,13 +4,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FeedImage from './src/components/FeedPost/FeedPost';
 import FeedPost from './src/components/FeedPost/FeedPost';
-
-const Stack = createNativeStackNavigator();
+import ProfileSetupPage from './src/pages/ProfileSetupPage/ProfileSetupPage';
+import RegisterPage from './src/pages/RegisterPage/RegisterPage';
+import LoginPage from './src/pages/LoginPage/LoginPage';
+import CameraComponent from './src/components/CameraComponent/CameraComponent';
+import LandingPage from './src/pages/LandingPage/LandingPage';
+import RootNavigator from './src/components/Navigation/RootNavigator';
 
 export default function App() {
   return (
-    // <NavigationContainer>
-      <FeedPost />
-    // </NavigationContainer>
+    <NavigationContainer>
+      <RootNavigator/>
+    </NavigationContainer>
   );
 }
