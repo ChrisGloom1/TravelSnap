@@ -36,7 +36,7 @@ const LoginPage = () => {
             console.log('Logged in with ', user.email + "and pass: ", passwordValue)
             navigation.navigate('Main');
         })
-        .catch(error => alert(error.message))
+        .catch(error => alert(error.message));
   }
 
   const goToRegisterPage = () => {
@@ -74,4 +74,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default LoginPage;

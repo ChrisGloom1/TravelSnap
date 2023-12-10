@@ -1,5 +1,5 @@
-import { View, Text, Image, Button, TextInput } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
+import { View, Text, Image, Button } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { RootStackParamList } from '../../components/Navigation/RootNavigator';
 import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { TabStackParamList } from '../../components/Navigation/TabNavigator';

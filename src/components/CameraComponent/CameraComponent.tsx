@@ -1,6 +1,6 @@
-import { Camera, CameraType, FlashMode } from "expo-camera";
+import { Camera, CameraType } from "expo-camera";
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import { Button } from "react-native-paper"
 import * as ImagePicker from "expo-image-picker";
 import { CompositeNavigationProp, RouteProp, useNavigation } from "@react-navigation/native";

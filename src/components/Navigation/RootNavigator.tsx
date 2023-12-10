@@ -1,8 +1,6 @@
-import { View, Text, Button, Image } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TabNavigator from './TabNavigator';
-import CameraComponent from '../CameraComponent/CameraComponent';
 import AddPostPage from '../../pages/AddPostPage/AddPostPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';

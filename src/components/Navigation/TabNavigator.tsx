@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React, { useLayoutEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProfilePage from "../../pages/ProfilePage/ProfilePage";

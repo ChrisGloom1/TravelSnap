@@ -6,13 +6,13 @@ import { Text } from 'react-native';
 export default function App() {
   return (
     <NavigationContainer>
+      {/* <Text>Hello</Text>
       <Text>Hello</Text>
       <Text>Hello</Text>
       <Text>Hello</Text>
-      <Text>Hello</Text>
-      <Text>Hello</Text>
+      <Text>Hello</Text> */}
       {/* <RegisterPage/> */}
-      <LoginPage/>
+      {/* <LoginPage/> */}
       <RootNavigator/>
     </NavigationContainer>
   );
