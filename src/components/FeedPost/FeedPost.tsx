@@ -1,27 +1,25 @@
+import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
-type FeedPostProps = {
-  userId: number;
-  userName: string;
-  userImage: string;
+export type FeedPostProps = {
+  postID: string,
+  userID: string;
+  // userName: string;
+  // userImage: string;
   image: string;
   caption: string;
-  timestamp: string;
-  latitude: number;
-  longitude: number;
+  // timestamp: Timestamp;
+  // latitude: number;
+  // longitude: number;
 };
 
-const FeedPost: React.FC<FeedPostProps> = () => {
+const FeedPost = ({ postID, userID, image, caption }: FeedPostProps) => {
 
   const [postLiked, setPostLiked] = useState<Boolean>(false);
 
   const handleLikePress = () => {
-    if (postLiked) {
-      setPostLiked(false);
-    } else {
-      setPostLiked(true);
-    }
+   setPostLiked(!postLiked)
   }
   
   return (
@@ -35,13 +33,10 @@ const FeedPost: React.FC<FeedPostProps> = () => {
             }}
             className="w-8 h-8 rounded-full"
           />
-          <Text className="text-lg pl-2">Username</Text>
+          <Text className="text-lg pl-2">{userID}</Text>
         </View>
         <Image
-          source={{
-            uri:
-              "https://images.unsplash.com/photo-1682685797406-97f364419b4a?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }}
+          source={{ uri: image }} // "https://images.unsplash.com/photo-1682685797406-97f364419b4a?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           className="w-full h-[450]"
         />
       </View>
@@ -55,9 +50,8 @@ const FeedPost: React.FC<FeedPostProps> = () => {
       </View>
       <View className="justify-start pr-2 pl-2 pt-1 pb-1">
         <Text className="mr-2">
-          <Text className="font-bold">Username </Text>
-          Caption a picture of a girl between mountaints on a trip to somewhere
-          we don't know.
+          <Text className="font-bold"> {userID} </Text>
+          {caption}
         </Text>
       </View>
     </View>

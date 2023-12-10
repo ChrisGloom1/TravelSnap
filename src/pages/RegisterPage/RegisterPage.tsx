@@ -3,16 +3,33 @@ import { View, Text, TextInput, TouchableOpacity, NativeSyntheticEvent, TextInpu
 import ButtonBlue from "../../components/Button/ButtonBlue"
 import Input from "../../components/Input/Input"
 import WelcomeToTravelSnap from "../../components/WelcomeToTravelSnap/WelcomeToTravelSnap"
+import { auth, db } from "../../../firebase";
+import { addDoc, collection, doc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { TabStackParamList } from '../../components/Navigation/TabNavigator';
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { RootStackParamList } from "../../components/Navigation/RootNavigator"
 
+export type RegisterScreenNavigationProp = CompositeNavigationProp<
+BottomTabNavigationProp<TabStackParamList, "Home">,
+NativeStackNavigationProp<RootStackParamList>
+>;
 
 const RegisterPage = () => {
+  const navigation = useNavigation<RegisterScreenNavigationProp>();
 
   const [emailValue, setEmailValue] = useState<string>('')
+  const [usernameValue, setUsernameValue] = useState<string>('')
   const [passwordValue, setPasswordValue] = useState<string>('')
   const [confirmPasswordValue, setConfirmPasswordValue] = useState<string>('')
 
   const handleEmailChange = (text: string) => {
     setEmailValue(text)
+  }
+  const handleUsernameChange = (text: string) => {
+    setUsernameValue(text)
   }
   const handlePasswordChange = (text: string) => {
     setPasswordValue(text)
@@ -21,14 +38,24 @@ const RegisterPage = () => {
     setConfirmPasswordValue(text)
   }
 
-  const handleLoginPress = () => {
-    // insert login logic here
-    console.log("user: " + emailValue + " \npass: " + passwordValue + " \nconfirm pass: " + confirmPasswordValue)
+  const handleRegisterPress = async () => {
+    createUserWithEmailAndPassword(auth, emailValue.trim(), passwordValue)
+      .then(async userCredentials => {
+          const user = userCredentials.user;
+          console.log('Registered with: ', user.email + 'password: ', passwordValue + " \nconfirm pass: " + confirmPasswordValue);
+          const docRef = await addDoc(collection(db, 'users'), {
+            userID: user.uid,
+            username: usernameValue
+          });  
+          console.log("New user added with id: ", docRef.id)
+          navigation.navigate('Main');
+        })
+        .catch(error => alert(error.message))
   }
 
   const goToLoginPage = () => {
-    // insert navigation logic here
-    console.log("go to login page")
+    navigation.navigate('Login');
+    console.log("go to login page");
   }
 
   return (
@@ -38,6 +65,10 @@ const RegisterPage = () => {
         <Input 
           placeholderText="Email" 
           onInputChange={handleEmailChange}
+        />
+        <Input 
+          placeholderText="Username" 
+          onInputChange={handleUsernameChange}
         />
         <Input 
           placeholderText="Password" 
@@ -55,7 +86,7 @@ const RegisterPage = () => {
           </TouchableOpacity>
           <ButtonBlue 
             label="Register"
-            onPress={handleLoginPress}
+            onPress={handleRegisterPress}
           />
         </View>
       </View>
