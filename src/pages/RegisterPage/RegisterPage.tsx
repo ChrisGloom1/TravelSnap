@@ -9,8 +9,8 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { TabStackParamList } from '../../components/Navigation/TabNavigator';
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import { RootStackParamList } from "../../components/Navigation/RootNavigator"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../components/Navigation/RootNavigator";
 
 export type RegisterScreenNavigationProp = CompositeNavigationProp<
 BottomTabNavigationProp<TabStackParamList, "Home">,

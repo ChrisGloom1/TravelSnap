@@ -1,5 +1,5 @@
-import { Text, View, Button } from 'react-native'
-import React from 'react'
+import { Text, View, Button } from 'react-native';
+import React from 'react';
 import { NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../components/Navigation/RootNavigator';
 

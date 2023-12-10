@@ -1,15 +1,15 @@
-import { useState } from "react"
-import { View, Text, TextInput, TouchableOpacity, NativeSyntheticEvent, TextInputChangeEventData } from "react-native"
-import ButtonBlue from "../../components/Button/ButtonBlue"
-import Input from "../../components/Input/Input"
+import { useState } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import ButtonBlue from "../../components/Button/ButtonBlue";
+import Input from "../../components/Input/Input";
 import WelcomeToTravelSnap from "../../components/WelcomeToTravelSnap/WelcomeToTravelSnap"
 import { auth } from "../../../firebase";
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { CompositeNavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
+import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { TabStackParamList } from '../../components/Navigation/TabNavigator';
 import { RootStackParamList } from "../../components/Navigation/RootNavigator"
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export type LoginScreenNavigationProp = CompositeNavigationProp<
 BottomTabNavigationProp<TabStackParamList, "Home">,
