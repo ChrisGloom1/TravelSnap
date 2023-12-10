@@ -9,7 +9,7 @@ import { db, storage, auth } from "../../../firebase";
 import { addDoc, collection, serverTimestamp, updateDoc, doc, getDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Input from '../../components/Input/Input';
-
+import * as Location from "expo-location";
 
 type AddPostScreenRouteProp = RouteProp<RootStackParamList, "AddPost">;
 
@@ -23,18 +23,40 @@ const AddPostPage = () => { //{item} : Props
   const {params: {image}} = useRoute<AddPostScreenRouteProp>();
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState<string>('');
+  const [location, setLocation] = useState<Location.LocationObject>();
+
+  useEffect(() => {
+    (async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log("LOCATION FROM ADDPOST USEEFFECT: " + location);
+    })();
+  }, [location])
   
   const uploadPost = async () => {
     if (loading) return;
+
+    if (!location) {
+      console.log("Location is not available yet");
+      return;
+    }
+
     setLoading(true);
     const userId = auth.currentUser!.uid;
+    const coords = { latitude: location.coords.latitude, longitude: location.coords.longitude,}
 
     try {
       // 1. Create a post and add it to firestore 'posts' collection
       const userPostsRef = collection(db, 'posts', userId, 'userPosts');
       const docRef = await addDoc(userPostsRef, {
         caption: caption,
-        timestamp: serverTimestamp()
+        timestamp: serverTimestamp(),
+        coords: coords
       });
 
       console.log("New post added with ID", docRef.id);

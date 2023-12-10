@@ -1,19 +1,20 @@
+import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
 export type FeedPostProps = {
   postID: string,
-  //userID: string;
   username: string;
   userImage: string;
   image: string;
   caption: string;
-  // timestamp: Timestamp;
-  // latitude: number;
-  // longitude: number;
+  timestamp: Timestamp;
+  latitude: number;
+  longitude: number;
+  locationName: string
 };
 
-const FeedPost = ({ postID, username, image, caption, userImage }: FeedPostProps) => {
+const FeedPost = ({ username, image, caption, userImage, locationName, timestamp }: FeedPostProps) => {
 
   const [postLiked, setPostLiked] = useState<Boolean>(false);
 
@@ -21,6 +22,34 @@ const FeedPost = ({ postID, username, image, caption, userImage }: FeedPostProps
    setPostLiked(!postLiked)
   }
   
+  const convertTimestamp = (timestamp: Timestamp): string => {
+    const now = new Date();
+    const postTime = timestamp.toDate();
+    const timeDifference = now.getTime() - postTime.getTime();
+    const secondsInMinute = 60;
+    const secondsInHour = secondsInMinute * 60;
+    const secondsInDay = secondsInHour * 24;
+    const secondsInWeek = secondsInDay * 7;
+  
+    if (timeDifference < secondsInMinute) {
+      const secondsAgo = Math.floor(timeDifference);
+      return `${secondsAgo} second${secondsAgo === 1 ? '' : 's'} ago`;
+    } else if (timeDifference < secondsInHour) {
+      const minutesAgo = Math.floor(timeDifference / secondsInMinute);
+      return `${minutesAgo} minute${minutesAgo === 1 ? '' : 's'} ago`;
+    } else if (timeDifference < secondsInDay) {
+      const hoursAgo = Math.floor(timeDifference / secondsInHour);
+      return `${hoursAgo} hour${hoursAgo === 1 ? '' : 's'} ago`;
+    } else if (timeDifference < secondsInWeek) {
+      const daysAgo = Math.floor(timeDifference / secondsInDay);
+      return `${daysAgo} day${daysAgo === 1 ? '' : 's'} ago`;
+    } else {
+      const weeksAgo = Math.floor(timeDifference / secondsInWeek);
+      return `${weeksAgo} week${weeksAgo === 1 ? '' : 's'} ago`;
+    }
+  };
+  
+
   return (
     <View className="h-screen justify-center bg-gray-100">
       <View className="w-full">
@@ -45,7 +74,8 @@ const FeedPost = ({ postID, username, image, caption, userImage }: FeedPostProps
           
         </TouchableOpacity>
         <Text className="text-2xl ml-2">💬</Text>
-        <Text className="text-2xl ml-1">📍</Text>
+        <Text className="text-2xl ml-1">📍 {locationName}</Text>
+        <Text className="text-2xl ml-2">{convertTimestamp(timestamp)}</Text>
       </View>
       <View className="justify-start pr-2 pl-2 pt-1 pb-1">
         <Text className="mr-2">
