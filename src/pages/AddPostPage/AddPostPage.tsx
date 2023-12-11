@@ -6,8 +6,8 @@ import { TabStackParamList } from '../../components/Navigation/TabNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import { db, storage, auth } from "../../../firebase";
-import { addDoc, collection, serverTimestamp, updateDoc, doc } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { addDoc, collection, serverTimestamp, updateDoc, doc, getDoc } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Input from '../../components/Input/Input';
 
 
@@ -18,51 +18,61 @@ BottomTabNavigationProp<TabStackParamList, "AddPhoto">,
 NativeStackNavigationProp<RootStackParamList>
 >
 
-// type Props = {
-//   item: string;
-// }
-
 const AddPostPage = () => { //{item} : Props
   const navigation = useNavigation<AddPhotoScreenNavigationProp>();
   const {params: {image}} = useRoute<AddPostScreenRouteProp>();
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState<string>('');
-  console.log(`From AddPostPage mehhhh ${image}`);
-
-  useEffect(() => {
-    console.log('Image in AddPostPage:', image);
-  }, [image]);
-  // 1) Create a post and add it to firestore 'posts' collection
-  // 2) get the post ID for the newly created post
-  // 3) upload the image to firebase storage with the post ID
-  // 4) get a download URL from fb storage and update the original post w/image
-
+  
   const uploadPost = async () => {
-    if(loading) return;
+    if (loading) return;
     setLoading(true);
-    const docRef = await addDoc(collection(db, 'posts'), {
-      userID: auth.currentUser?.uid,
-      caption: caption,
-      timestamp: serverTimestamp()
-    });
-    console.log("New post added with ID", docRef.id);
-    
-    const imageRef = ref(storage, `posts/${docRef.id}/image`);
+    const userId = auth.currentUser!.uid;
 
-    await uploadString(imageRef, image).then(async snapshot => {
+    try {
+      // 1. Create a post and add it to firestore 'posts' collection
+      const userPostsRef = collection(db, 'posts', userId, 'userPosts');
+      const docRef = await addDoc(userPostsRef, {
+        caption: caption,
+        timestamp: serverTimestamp()
+      });
+
+      console.log("New post added with ID", docRef.id);
+
+      // 2. Upload the image to firebase storage with the post ID
+      const imageRef = ref(storage, `posts/${userId}/userPosts/${docRef.id}/image`);
+
+      const response = await fetch(image);
+      const blob = await response.blob();
+
+      // 3. Determine file type of the image (f.ex. image/jpeg)
+      const metadata = {
+        contentType: "image/jpeg"
+      };
+
+      // 4. Send image's binary data into Firebase Storage
+      await uploadBytes(imageRef, blob, metadata);
+
+      // 5. Get a download URL from Firebase Storage and update the original post w/image
       const downloadURL = await getDownloadURL(imageRef);
-      await updateDoc(doc(db, 'posts', docRef.id), {
+
+      await updateDoc(doc(db, 'posts', userId, 'userPosts', docRef.id), {
         image: downloadURL
       });
-    })
 
-    setLoading(false);
-  }
+      setLoading(false);
+      navigation.navigate('Home');
+
+    } catch (error) {
+      console.error("Error uploading post:", error);
+      setLoading(false);
+    }
+  };
 
   return (
     <View>
       <Text>AddPostPage</Text>
-      <Image source={{uri: "https://images.unsplash.com/photo-1682685797406-97f364419b4a?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}}/>
+      <Image source={{uri: image}}/>
       <Input onInputChange={setCaption} placeholderText='Add caption'/>
       <Button title={loading ? "Uploading..." : "Upload"} onPress={uploadPost}/>
     </View>
@@ -70,3 +80,4 @@ const AddPostPage = () => { //{item} : Props
 }
 
 export default AddPostPage;
+

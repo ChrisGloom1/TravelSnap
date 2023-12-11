@@ -5,9 +5,11 @@ import AddPostPage from '../../pages/AddPostPage/AddPostPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
 import LandingPage from '../../pages/LandingPage/LandingPage';
+import ProfileSetupPage from '../../pages/ProfileSetupPage/ProfileSetupPage';
 
 export type RootStackParamList = {
     LandingPage: undefined;
+    ProfileSetupPage: undefined;
     Main: undefined;
     Register: undefined;
     Login: undefined;
@@ -22,6 +24,7 @@ const RootNavigator = () => {
     <RootStack.Navigator initialRouteName='LandingPage'>
       
       <RootStack.Screen name="LandingPage" component={LandingPage} />
+      <RootStack.Screen name="ProfileSetupPage" component={ProfileSetupPage}/>
         
       <RootStack.Group>
         <RootStack.Screen name="Main" component={TabNavigator}/>

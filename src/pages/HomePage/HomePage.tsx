@@ -5,6 +5,7 @@ import { TabStackParamList } from '../../components/Navigation/TabNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../components/Navigation/RootNavigator';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import ProfileSetupPage from '../ProfileSetupPage/ProfileSetupPage';
 
 export type HomeScreenNavigationProp = CompositeNavigationProp<
 BottomTabNavigationProp<TabStackParamList, 'Home'>,

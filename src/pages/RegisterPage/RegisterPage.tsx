@@ -4,7 +4,7 @@ import ButtonBlue from "../../components/Button/ButtonBlue"
 import Input from "../../components/Input/Input"
 import WelcomeToTravelSnap from "../../components/WelcomeToTravelSnap/WelcomeToTravelSnap"
 import { auth, db } from "../../../firebase";
-import { addDoc, collection, doc } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
@@ -12,10 +12,7 @@ import { TabStackParamList } from '../../components/Navigation/TabNavigator';
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../components/Navigation/RootNavigator";
 
-export type RegisterScreenNavigationProp = CompositeNavigationProp<
-BottomTabNavigationProp<TabStackParamList, "Home">,
-NativeStackNavigationProp<RootStackParamList>
->;
+export type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const RegisterPage = () => {
   const navigation = useNavigation<RegisterScreenNavigationProp>();
@@ -43,12 +40,15 @@ const RegisterPage = () => {
       .then(async userCredentials => {
           const user = userCredentials.user;
           console.log('Registered with: ', user.email + 'password: ', passwordValue + " \nconfirm pass: " + confirmPasswordValue);
-          const docRef = await addDoc(collection(db, 'users'), {
+          const userDocRef = doc(db, 'users', user.uid);
+    
+          await setDoc(userDocRef, {
             userID: user.uid,
-            username: usernameValue
-          });  
-          console.log("New user added with id: ", docRef.id)
-          navigation.navigate('Main');
+            username: usernameValue,
+            profileImg: null
+          })
+          console.log("New user added with id: ", userDocRef.id)
+          navigation.navigate("ProfileSetupPage");
         })
         .catch(error => alert(error.message))
   }
