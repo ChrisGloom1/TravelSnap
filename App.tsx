@@ -10,11 +10,12 @@ import LoginPage from './src/pages/LoginPage/LoginPage';
 import CameraComponent from './src/components/CameraComponent/CameraComponent';
 import LandingPage from './src/pages/LandingPage/LandingPage';
 import RootNavigator from './src/components/Navigation/RootNavigator';
+import ExplorePage from './src/pages/ExplorePage/ExplorePage';
 
 export default function App() {
   return (
     <NavigationContainer>
-      <RegisterPage/>
+      <ExplorePage/>
       {/* <RootNavigator/> */}
     </NavigationContainer>
   );

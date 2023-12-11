@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, ImageBackground } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native'
 
 type TGalleryPostProps = {
   userId: number
@@ -8,20 +8,27 @@ type TGalleryPostProps = {
   location: string
 }
 
+const handleOnImagePress = (image: string) => {
+  // insert navigation logic here
+  console.log(image)
+}
 
 const GalleryPost: React.FC<TGalleryPostProps> = ({ userName, image, location }) => {
   return (
-    <View className='bg-gray-200 h-[170] m-1 rounded-md'>
-      <View>
-        <Text className="text-xs font-bold p-1">{userName}</Text>
-        <Image
-          source={{uri: image}}
-          resizeMode='cover'
-          className='h-[120] w-[120]'
-        />
-      </View>
-      <Text className='text-xs font-light p-1 text-clip'>{location}</Text>
-    </View>
+    <TouchableOpacity 
+      className='bg-white w-1/3' 
+      style={{elevation: 2}} 
+      onPress={() => handleOnImagePress(image)}
+    >
+      <ImageBackground
+        source={{uri: image}}
+        resizeMode='contain'
+        className='aspect-square'
+        
+      >
+        <Text></Text>
+        </ ImageBackground>
+    </TouchableOpacity>
   )
 }
 
