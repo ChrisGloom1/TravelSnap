@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, NativeSyntheticEvent, TextInpu
 import ButtonBlue from "../../components/Button/ButtonBlue"
 import Input from "../../components/Input/Input"
 import WelcomeToTravelSnap from "../../components/WelcomeToTravelSnap/WelcomeToTravelSnap"
+import { LinearGradient } from "expo-linear-gradient"
 
 
 const LoginPage = () => {
@@ -28,10 +29,13 @@ const LoginPage = () => {
   }
 
   return (
-    <View className="flex-1 items-center justify-center bg-gray-100">
+    <LinearGradient 
+      className="flex-1 items-center justify-center bg-gray-100"
+      colors={['#ffc0a0', '#ffe7a0']}
+    >
       <View className=" w-[90%] h-[85%] items-center justify-center mt-9">
         <WelcomeToTravelSnap />
-
+        <Text>Log in</Text>
         <Input 
           placeholderText="Email" 
           onInputChange={handleEmailChange}
@@ -53,7 +57,8 @@ const LoginPage = () => {
           />
         </View>
       </View>
-    </View>
+    </LinearGradient>
+
   )
 }
 

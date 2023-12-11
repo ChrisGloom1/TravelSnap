@@ -1,4 +1,5 @@
 import { GestureResponderEvent, TouchableOpacity, View, Text } from "react-native"
+import { LinearGradient } from "expo-linear-gradient"
 
 type TButtonProps = {
   label: string
@@ -9,9 +10,12 @@ const ButtonBlue: React.FC<TButtonProps> = ({ label, onPress }) => {
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <View className="bg-blue-200 rounded-xl px-8 py-4 m-4">
+      <LinearGradient 
+        className="bg-blue-200 rounded-xl px-8 py-4 m-4"
+        colors={['#a0cbff', '#a0b9ff']}
+      >
         <Text>{label}</Text>
-      </View>
+      </LinearGradient>
     </TouchableOpacity>
   )
 }

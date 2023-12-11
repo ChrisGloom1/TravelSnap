@@ -4,7 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        blacko: "#00000036"
+        blacko: "#00000036",
+        gradientOrange: "#ffc0a0",
+        gradientYellow: "#ffe7a0"
       },
     },
   },

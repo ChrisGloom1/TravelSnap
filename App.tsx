@@ -14,7 +14,8 @@ import RootNavigator from './src/components/Navigation/RootNavigator';
 export default function App() {
   return (
     <NavigationContainer>
-      <RootNavigator/>
+      <RegisterPage/>
+      {/* <RootNavigator/> */}
     </NavigationContainer>
   );
 }
