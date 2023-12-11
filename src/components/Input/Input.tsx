@@ -19,7 +19,14 @@ const Input: React.FC<TInputProps> = ({placeholderText, onInputChange, secureTex
   }
 
   return (
-    <TextInput className="bg-white rounded-xl w-full p-2 m-2" placeholder={placeholderText} value={inputValue} onChange={handleOnChange} secureTextEntry={secureTextEntry}/>
+    <TextInput 
+      className="bg-white rounded-xl w-full p-2 m-2" 
+      placeholder={placeholderText} 
+      value={inputValue} 
+      onChange={handleOnChange} 
+      secureTextEntry={secureTextEntry}
+      style={{elevation: 2}}
+      />
   )
 }
 
