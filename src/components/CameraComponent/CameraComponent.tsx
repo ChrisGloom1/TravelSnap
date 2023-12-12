@@ -25,8 +25,8 @@ const CameraComponent = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerShown: false,
-    });
+      headerShown: false
+    })
   }, []);
 
   useEffect(() => {

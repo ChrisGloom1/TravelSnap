@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import CameraComponent from "../CameraComponent/CameraComponent";
 import HomePage from "../../pages/HomePage/HomePage";
+import { styled } from "nativewind";
 
 
 export type TabStackParamList = {
@@ -28,16 +29,18 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator
+      // barStyle={{backgroundColor: "#874646"}}
       screenOptions={({ route }) => ({
-        tabBarActiveTintColor: "#cf5ee6",
-        tabBarInactiveTintColor: "#8c8c8c",
+        tabBarStyle: { backgroundColor: "#ffefbf" },
+        tabBarActiveTintColor: "#ff6b22",
+        tabBarInactiveTintColor: "gray",
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === "Home") {
             return (
               <Icon
                 name="home"
                 type="entypo"
-                color={focused ? "#cf5ee6" : "gray"}
+                color={focused ? "#ff6b22" : "gray"}
               />
             );
           } else if (route.name === "Profile") {
@@ -45,7 +48,7 @@ const TabNavigator = () => {
               <Icon
                 name="account"
                 type="material-community"
-                color={focused ? "#cf5ee6" : "gray"}
+                color={focused ? "#ff6b22" : "gray"}
               />
             );
           } else if (route.name === "AddPhoto") {
@@ -53,7 +56,7 @@ const TabNavigator = () => {
               <Icon
                 name="diff-added"
                 type="octicon"
-                color={focused ? "#cf5ee6" : "gray"}
+                color={focused ? "#ff6b22" : "gray"}
               />
             );
           } else {
@@ -61,7 +64,7 @@ const TabNavigator = () => {
               <Icon
                 name="magnifying-glass"
                 type="entypo"
-                color={focused ? "#cf5ee6" : "gray"}
+                color={focused ? "#ff6b22" : "gray"}
               />
             );
           }

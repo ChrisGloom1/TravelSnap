@@ -4,6 +4,7 @@ import LoginPage from './src/pages/LoginPage/LoginPage';
 import RootNavigator from './src/components/Navigation/RootNavigator';
 import ExplorePage from './src/pages/ExplorePage/ExplorePage';
 import { Text } from 'react-native';
+import CameraComponent from './src/components/CameraComponent/CameraComponent';
 export default function App() {
   return (
     <NavigationContainer>
@@ -14,8 +15,9 @@ export default function App() {
       <Text>Hello</Text> */}
       {/* <RegisterPage/> */}
       {/* <LoginPage/> */}
-      <ExplorePage/>
-      {/* <RootNavigator/> */}
+      {/* <CameraComponent /> */}
+      {/* <LoginPage/> */}
+      <RootNavigator/>
     </NavigationContainer>
   );
 }
