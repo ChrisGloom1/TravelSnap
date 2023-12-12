@@ -8,6 +8,7 @@ import { RootStackParamList } from "../Navigation/RootNavigator";
 import { TabStackParamList } from "../Navigation/TabNavigator";
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { LinearGradient } from "expo-linear-gradient";
 
 export type AddPhotoScreenNavigationProp = CompositeNavigationProp<
 BottomTabNavigationProp<TabStackParamList, "AddPhoto">,
@@ -74,7 +75,7 @@ const CameraComponent = () => {
   }
 
   return(
-    <View className="flex-1">
+    <LinearGradient className="flex-1" colors={['#ffc0a066', '#ffe7a066']}>
       <View className="flex-1 flex-row">
         <Camera 
         ref={ref => setCamera(ref)}
@@ -131,7 +132,7 @@ const CameraComponent = () => {
           </View>
         }
 
-      </View>
+      </LinearGradient>
   )
 }
 
