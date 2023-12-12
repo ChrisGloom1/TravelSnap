@@ -48,6 +48,30 @@ const ImageDetailPage:React.FC<TImageDetailPageProps> = ({ imageId, image, userI
         <Text className="ml-1 text-md">Klodzko</Text>
       </View>
 
+
+
+        <MapView
+          style={{ height: 200 }}
+          key={Math.random()}
+          initialRegion={{
+            latitude: post.latitude,
+            longitude: post.longitude,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
+          }}
+        >
+          {post.latitude && post.longitude && (
+            <Marker
+              coordinate={{
+                latitude: post.latitude,
+                longitude: post.longitude,
+              }}
+              title="Photo location"
+              identifier="Photo location"
+            />
+          )}
+        </MapView>
+
     </LinearGradient>
   )
 }
