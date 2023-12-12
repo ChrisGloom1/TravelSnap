@@ -28,6 +28,7 @@ const AddPostPage = () => { //{item} : Props
   useEffect(() => {
     (async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
+    console.log("Location permission status:", status);
       if (status !== "granted") {
         console.log("Permission to access location was denied");
         return;
@@ -83,7 +84,7 @@ const AddPostPage = () => { //{item} : Props
       });
 
       setLoading(false);
-      navigation.navigate('Home');
+      navigation.navigate('Main');
 
     } catch (error) {
       console.error("Error uploading post:", error);

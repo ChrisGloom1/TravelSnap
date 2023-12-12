@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
@@ -22,30 +23,17 @@ const FeedPost = ({ username, image, caption, userImage, locationName, timestamp
   }
   
   const convertTimestamp = (timestamp: Timestamp): string => {
-    const now = new Date();
-    const postTime = timestamp.toDate();
-    const timeDifference = now.getTime() - postTime.getTime();
-    const secondsInMinute = 60;
-    const secondsInHour = secondsInMinute * 60;
-    const secondsInDay = secondsInHour * 24;
-    const secondsInWeek = secondsInDay * 7;
+    const date = timestamp.toDate(); // Konwersja Timestamp na obiekt Date
   
-    if (timeDifference < secondsInMinute) {
-      const secondsAgo = Math.floor(timeDifference);
-      return `${secondsAgo} second${secondsAgo === 1 ? '' : 's'} ago`;
-    } else if (timeDifference < secondsInHour) {
-      const minutesAgo = Math.floor(timeDifference / secondsInMinute);
-      return `${minutesAgo} minute${minutesAgo === 1 ? '' : 's'} ago`;
-    } else if (timeDifference < secondsInDay) {
-      const hoursAgo = Math.floor(timeDifference / secondsInHour);
-      return `${hoursAgo} hour${hoursAgo === 1 ? '' : 's'} ago`;
-    } else if (timeDifference < secondsInWeek) {
-      const daysAgo = Math.floor(timeDifference / secondsInDay);
-      return `${daysAgo} day${daysAgo === 1 ? '' : 's'} ago`;
-    } else {
-      const weeksAgo = Math.floor(timeDifference / secondsInWeek);
-      return `${weeksAgo} week${weeksAgo === 1 ? '' : 's'} ago`;
-    }
+    // Poniżej możesz dostosować formatowanie daty i godziny według własnych preferencji
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych miesięcy
+    const day = date.getDate().toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych dni
+    const hours = date.getHours().toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych godzin
+    const minutes = date.getMinutes().toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych minut
+  
+    // Zwróć sformatowaną datę i godzinę
+    return `${day}.${month}.${year} ${hours}:${minutes}`;
   };
   
 
