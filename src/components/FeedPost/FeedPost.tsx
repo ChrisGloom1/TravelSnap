@@ -1,4 +1,3 @@
-import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 

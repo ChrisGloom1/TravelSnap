@@ -1,4 +1,4 @@
-import { Text, ScrollView, Image, View, Button } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import FeedPost, { FeedPostProps } from "../../components/FeedPost/FeedPost";
 import {
