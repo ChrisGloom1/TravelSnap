@@ -78,6 +78,7 @@ const RegisterPage = () => {
         <Input 
           placeholderText="Password" 
           onInputChange={handlePasswordChange}
+          secureTextEntry={true}
         />
         <Input 
           placeholderText="Confirm password" 
