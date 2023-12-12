@@ -1,16 +1,33 @@
-import { Camera, CameraType, FlashMode } from "expo-camera";
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { Button } from "react-native-paper"
+import { Camera, CameraType } from "expo-camera";
+import React, { useState, useEffect, useLayoutEffect } from "react";
+import { View, Text, Image } from "react-native";
+import { Button } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
+import { CompositeNavigationProp, RouteProp, useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../Navigation/RootNavigator";
+import { TabStackParamList } from "../Navigation/TabNavigator";
+import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+export type AddPhotoScreenNavigationProp = CompositeNavigationProp<
+BottomTabNavigationProp<TabStackParamList, "AddPhoto">,
+NativeStackNavigationProp<RootStackParamList>
+>
 
 const CameraComponent = () => {
+  const navigation = useNavigation<AddPhotoScreenNavigationProp>();
 
   const [hasCameraPermission, setHasCameraPermission] = useState<Boolean | null >(null);
   const [hasGalleryPermission, setHasGalleryPermission] = useState<Boolean | null >(null);
   const [type, setType] = useState<CameraType>(CameraType.back);
   const [camera, setCamera] = useState<Camera | null>(null);
   const [image, setImage] = useState<string | null>(null);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -40,6 +57,7 @@ const CameraComponent = () => {
     console.log(result)
 
     if (!result.canceled) {
+      // setImage(result.assets[0].uri)
       setImage(result.assets[0].uri)
     }
   }
@@ -79,7 +97,8 @@ const CameraComponent = () => {
             </Button>
             <Button
               mode="outlined"
-              onPress={() => printImageData(image)}
+              //onPress={() => printImageData(image)}
+              onPress={() => navigation.navigate('AddPost', {image: image})}
             >
               ✅
             </Button>

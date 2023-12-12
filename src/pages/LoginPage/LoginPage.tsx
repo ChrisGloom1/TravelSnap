@@ -1,12 +1,24 @@
-import { useState } from "react"
-import { View, Text, TextInput, TouchableOpacity, NativeSyntheticEvent, TextInputChangeEventData } from "react-native"
-import ButtonBlue from "../../components/Button/ButtonBlue"
-import Input from "../../components/Input/Input"
+import { useState } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import ButtonBlue from "../../components/Button/ButtonBlue";
+import Input from "../../components/Input/Input";
 import WelcomeToTravelSnap from "../../components/WelcomeToTravelSnap/WelcomeToTravelSnap"
 import { LinearGradient } from "expo-linear-gradient"
+import { auth } from "../../../firebase";
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { TabStackParamList } from '../../components/Navigation/TabNavigator';
+import { RootStackParamList } from "../../components/Navigation/RootNavigator"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
+export type LoginScreenNavigationProp = CompositeNavigationProp<
+BottomTabNavigationProp<TabStackParamList, "Home">,
+NativeStackNavigationProp<RootStackParamList>
+>;
 
 const LoginPage = () => {
+  const navigation = useNavigation<LoginScreenNavigationProp>();
 
   const [emailValue, setEmailValue] = useState<string>('')
   const [passwordValue, setPasswordValue] = useState<string>('')
@@ -19,13 +31,18 @@ const LoginPage = () => {
   }
 
   const handleLoginPress = () => {
-    // insert login logic here
-    console.log("user: " + emailValue + " pass: " + passwordValue)
+    signInWithEmailAndPassword(auth, emailValue, passwordValue)
+        .then(userCredentials => {
+            const user = userCredentials.user
+            console.log('Logged in with ', user.email + "and pass: ", passwordValue)
+            navigation.navigate('Main');
+        })
+        .catch(error => alert(error.message));
   }
 
   const goToRegisterPage = () => {
-    // insert navigation logic here
-    console.log("go to register page")
+    navigation.navigate('Register');
+    console.log("go to register page");
   }
 
   return (
@@ -62,4 +79,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default LoginPage;
