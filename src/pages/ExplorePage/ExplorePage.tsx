@@ -5,9 +5,9 @@ import { LinearGradient } from 'expo-linear-gradient'
 
 type TPostProps = {
   imageId: number
+  image: string
   userId: number
   userName: string
-  image: string
   location: string
 }
 
