@@ -1,19 +1,20 @@
+import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
 export type FeedPostProps = {
   postID: string,
-  //userID: string;
   username: string;
   userImage: string;
   image: string;
   caption: string;
-  // timestamp: Timestamp;
-  // latitude: number;
-  // longitude: number;
+  timestamp: Timestamp;
+  latitude: number;
+  longitude: number;
+  locationName: string
 };
 
-const FeedPost = ({ postID, username, image, caption, userImage }: FeedPostProps) => {
+const FeedPost = ({ username, image, caption, userImage, locationName, timestamp }: FeedPostProps) => {
 
   const [postLiked, setPostLiked] = useState<Boolean>(false);
 
@@ -21,6 +22,21 @@ const FeedPost = ({ postID, username, image, caption, userImage }: FeedPostProps
    setPostLiked(!postLiked)
   }
   
+  const convertTimestamp = (timestamp: Timestamp): string => {
+    const date = timestamp.toDate(); // Konwersja Timestamp na obiekt Date
+  
+    // Poniżej możesz dostosować formatowanie daty i godziny według własnych preferencji
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych miesięcy
+    const day = date.getDate().toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych dni
+    const hours = date.getHours().toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych godzin
+    const minutes = date.getMinutes().toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych minut
+  
+    // Zwróć sformatowaną datę i godzinę
+    return `${day}.${month}.${year} ${hours}:${minutes}`;
+  };
+  
+
   return (
     <View className="h-screen justify-center bg-gray-100">
       <View className="w-full">
@@ -45,7 +61,8 @@ const FeedPost = ({ postID, username, image, caption, userImage }: FeedPostProps
           
         </TouchableOpacity>
         <Text className="text-2xl ml-2">💬</Text>
-        <Text className="text-2xl ml-1">📍</Text>
+        <Text className="text-2xl ml-1">📍 {locationName}</Text>
+        <Text className="text-2xl ml-2">{convertTimestamp(timestamp)}</Text>
       </View>
       <View className="justify-start pr-2 pl-2 pt-1 pb-1">
         <Text className="mr-2">

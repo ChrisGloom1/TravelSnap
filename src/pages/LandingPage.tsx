@@ -1,8 +1,7 @@
-import { Text, View, Button } from 'react-native'
-import React from 'react'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Text, View, Button } from 'react-native';
+import React from 'react';
 import { NavigationProp } from '@react-navigation/native';
-import { RootStackParamList } from '../../components/Navigation/RootNavigator';
+import { RootStackParamList } from '../components/Navigation/RootNavigator';
 
 export type LandingPageProps = {
   navigation: NavigationProp<RootStackParamList, 'LandingPage'>;
