@@ -16,18 +16,14 @@ const handleOnImagePress = (image: string) => {
 const GalleryPost: React.FC<TGalleryPostProps> = ({ userName, image, location }) => {
   return (
     <TouchableOpacity 
-      className='bg-white w-1/3' 
-      style={{elevation: 2}} 
+      className='w-1/3 bg-transparent' 
       onPress={() => handleOnImagePress(image)}
     >
-      <ImageBackground
-        source={{uri: image}}
-        resizeMode='contain'
-        className='aspect-square'
-        
-      >
-        <Text></Text>
-        </ ImageBackground>
+    <ImageBackground
+      source={{uri: image}}
+      resizeMode='contain'
+      className='aspect-square' 
+    />
     </TouchableOpacity>
   )
 }

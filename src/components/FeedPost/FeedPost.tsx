@@ -38,7 +38,7 @@ const FeedPost = ({ username, image, caption, userImage, locationName, timestamp
   
 
   return (
-    <View className="h-screen justify-center bg-gray-100">
+    <View className="justify-center">
       <View className="w-full">
         <View className="flex-row pr-2 pl-2 pt-1 pb-1">
           <Image
@@ -46,9 +46,9 @@ const FeedPost = ({ username, image, caption, userImage, locationName, timestamp
               uri: userImage
                 //"https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             }}
-            className="w-8 h-8 rounded-full"
+            className="w-6 h-6 rounded-full"
           />
-          <Text className="text-lg pl-2">{username}</Text>
+          <Text className="text-lg pl-2 text-sm">{username}</Text>
         </View>
         <Image
           source={{ uri: image }} // "https://images.unsplash.com/photo-1682685797406-97f364419b4a?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -56,10 +56,11 @@ const FeedPost = ({ username, image, caption, userImage, locationName, timestamp
         />
       </View>
       <View className="flex-row pr-2 pl-2 pt-1 pb-1">
+
         <TouchableOpacity onPress={handleLikePress}>
-          {postLiked ? <Text className="text-2xl ml-2">💜</Text> : <Text className="text-2xl ml-2">🤍</Text>}
-          
+          <Text className="ml-2">{postLiked ? "💜" : "🤍"}</Text>
         </TouchableOpacity>
+
         <Text className="text-2xl ml-2">💬</Text>
         <Text className="text-2xl ml-1">📍 {locationName}</Text>
         <Text className="text-2xl ml-2">{convertTimestamp(timestamp)}</Text>

@@ -144,7 +144,7 @@
 // }
 
 // export default ProfilePage;
-import { Text, ScrollView, Image, View, Button } from "react-native";
+import { Text, ScrollView, Image, View, Button, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import FeedPost, { FeedPostProps } from "../../components/FeedPost/FeedPost";
 import {
@@ -163,6 +163,7 @@ import { RootStackParamList } from "../../components/Navigation/RootNavigator";
 import { useNavigation } from "@react-navigation/native";
 import ButtonBlue from "../../components/Button/ButtonBlue";
 import { LinearGradient } from "expo-linear-gradient";
+import GalleryPost from "../../components/GalleryPost/GalleryPost";
 
 export type ProfilePageNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;
@@ -240,65 +241,104 @@ function ProfilePage() {
   };
 
   return (
-    <ScrollView>
-      <LinearGradient colors={['#ffc0a0', '#ffe7a0']}>
-        <View className="flex items-center">
-          <Text className="font-bold text-2xl p-2">{username}</Text>
-          <Image source={{ uri: profileImg }} className="w-64 h-64 rounded-full mb-2" />
-        </View>
-        <View className="p-4">
-          <Text className="font-bold">About: 
-            <Text className="font-normal"> {bio}</Text>
-          </Text>
-        </View>
-          <ButtonBlue
-            label="Edit profile"
-            onPress={() => navigation.navigate("ProfileSetupPage")}
-          />
-      </LinearGradient>
-
-      {posts.length > 0 ? (
-        posts.map((post) => (
-          <View key={Math.random()}>
-            <FeedPost
-              key={post.postID}
-              postID={post.postID}
-              userImage={profileImg}
-              image={post.image}
-              caption={post.caption}
-              username={post.username}
-              latitude={post.latitude}
-              longitude={post.longitude}
-              timestamp={post.timestamp}
-              locationName={post.locationName}
-            />
-            <MapView
-              style={{ height: 200 }}
-              key={Math.random()}
-              initialRegion={{
-                latitude: post.latitude,
-                longitude: post.longitude,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.005,
-              }}
-            >
-              {post.latitude && post.longitude && (
-                <Marker
-                  coordinate={{
-                    latitude: post.latitude,
-                    longitude: post.longitude,
-                  }}
-                  title="Photo location"
-                  identifier="Photo location"
-                />
-              )}
-            </MapView>
+    <View>
+      <ScrollView>
+        <LinearGradient colors={['#ffc0a0', '#ffe7a0']}>
+          <View>
+            <View className="flex flex-row justify-between">
+              <ButtonBlue
+                label="Log out"
+                onPress={() => console.log("Log out pressed")}
+                // onPress={() => navigation.navigate("ProfileSetupPage")}
+              />
+              {/* <Image 
+                source={require('../../../assets/ikon.png')}
+                style={{ width: 40, height: 40 }}
+                resizeMode="contain"
+              /> */}
+              <ButtonBlue
+                label="Edit profile"
+                onPress={() => navigation.navigate("ProfileSetupPage")}
+              />
+            </View>
+          <View className="flex-1 flex-row p-4 justify-between">
+            <View>
+              <Image source={{ uri: profileImg }} className="w-28 h-28 rounded-full mb-2" />
+            </View>
+            <View className="ml-4 flex-1">
+              <Text className="font-bold text-xl mb-1">{username}</Text>
+              <View className="">
+                <Text className="font-bold">About: 
+                  <Text className="font-normal"> {bio}</Text>
+                </Text>
+              </View>
+              </View>
+            </View>
           </View>
-        ))
-      ) : (
-        <Text className="p-2">No images to show. Try posting a picture!</Text>
+        </LinearGradient>
+        <View className="border-b border-gray-400"/>
+
+        {/* Mer kode under det som er kommentert ut */}
+
+        {/* {posts.length > 0 ? (
+          posts.map((post) => (
+            <View key={Math.random()}>
+              <FeedPost
+                key={post.postID}
+                postID={post.postID}
+                userImage={profileImg}
+                image={post.image}
+                caption={post.caption}
+                username={post.username}
+                latitude={post.latitude}
+                longitude={post.longitude}
+                timestamp={post.timestamp}
+                locationName={post.locationName}
+              />
+              <MapView
+                style={{ height: 200 }}
+                key={Math.random()}
+                initialRegion={{
+                  latitude: post.latitude,
+                  longitude: post.longitude,
+                  latitudeDelta: 0.005,
+                  longitudeDelta: 0.005,
+                }}
+              >
+                {post.latitude && post.longitude && (
+                  <Marker
+                    coordinate={{
+                      latitude: post.latitude,
+                      longitude: post.longitude,
+                    }}
+                    title="Photo location"
+                    identifier="Photo location"
+                  />
+                )}
+              </MapView>
+            </View>
+          ))
+        ) : (
+          <Text className="p-2">No images to show. Try posting a picture!</Text>
+        )} */}
+      </ScrollView>
+      <FlatList
+        numColumns={3}
+        data={posts}
+        keyExtractor={(item) => item.postID.toString()}
+        refreshing={false}
+        onRefresh={() => console.log("Refreshed")}
+        renderItem={({ item }) => (
+          <GalleryPost
+            key={item.postID}
+            userName={item.username}
+            image={item.image}
+            userId={parseInt(userId)}
+            location="Unknown location"
+          />
       )}
-    </ScrollView>
+    />
+  </View>
   );
 }
 
