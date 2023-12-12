@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
+  View, Text,
 } from "react-native";
 import Input from "../../components/Input/Input";
 import ButtonBlue from "../../components/Button/ButtonBlue";
@@ -15,27 +10,36 @@ import * as ImagePicker from "expo-image-picker";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage, auth, db } from "../../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
-import { CompositeNavigationProp, useNavigation } from "@react-navigation/native";
+import {
+  CompositeNavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
 import { TabStackParamList } from "../../components/Navigation/TabNavigator";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../components/Navigation/RootNavigator";
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import * as Location from "expo-location";
 
 export type ProfileSetupScreenNavigationProp = CompositeNavigationProp<
-BottomTabNavigationProp<TabStackParamList, "Home">,
-NativeStackNavigationProp<RootStackParamList>
+  BottomTabNavigationProp<TabStackParamList, "Home">,
+  NativeStackNavigationProp<RootStackParamList>
 >;
 
 const ProfileSetupPage = () => {
   const navigation = useNavigation<ProfileSetupScreenNavigationProp>();
-  const [emailValue, setEmailValue] = useState<string>("");
-  const [passwordValue, setPasswordValue] = useState<string>("");
-  const [confirmPasswordValue, setConfirmPasswordValue] = useState<string>("");
+  // SKIP THESE ???
+  // const [emailValue, setEmailValue] = useState<string>("");
+  // const [passwordValue, setPasswordValue] = useState<string>("");
+  // const [confirmPasswordValue, setConfirmPasswordValue] = useState<string>("")
+  // const [username, setUsername] = useState<string>();
   const [hasGalleryPermission, setHasGalleryPermission] =
     useState<Boolean | null>(null);
   const [image, setImage] = useState<string | null>(null);
-  // const [username, setUsername] = useState<string>(); // SKIP ???
+  const [location, setLocation] = useState<Location.LocationObject>();
   const [bio, setBio] = useState<string>();
+  //const [address, setAddress] = useState<string>("");
+  const [generalLocation, setGeneralLocation] = useState<string>("");
+
   const userID = auth.currentUser!.uid;
 
   useEffect(() => {
@@ -44,8 +48,30 @@ const ProfileSetupPage = () => {
       const galleryStatus =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       setHasGalleryPermission(galleryStatus.status === "granted");
+
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log("LOCATION FROM PROFILESETUP USEEFFECT: " + location);
+
+      let reverseGeocode = await Location.reverseGeocodeAsync({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+
+      if (reverseGeocode && reverseGeocode.length > 0) {
+        setGeneralLocation(reverseGeocode[0]?.city || "Unknown Location");
+      }
+      
     })();
-  }, [image]);
+
+   
+  }, [image, location]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -106,7 +132,7 @@ const ProfileSetupPage = () => {
     await updateDoc(doc(db, "users", userID), {
       profileImg: downloadURL,
     });
-    navigation.navigate('Main');
+    navigation.navigate("Main");
   };
   // const handleLoginPress = () => {
   //   // insert login logic here
@@ -129,6 +155,9 @@ const ProfileSetupPage = () => {
           placeholderText="Username"
           onInputChange={handleUsernameChange}
         /> */}
+        <Text className="mr-2">
+          {generalLocation}
+        </Text>
         <Input placeholderText="Bio" onInputChange={handleBioChange} />
         <View className="flex-1 items-center">
           <ButtonBlue label="Continue" onPress={handleProfileUpdate} />
