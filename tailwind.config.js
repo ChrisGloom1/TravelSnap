@@ -6,7 +6,8 @@ module.exports = {
       colors: {
         blacko: "#00000036",
         gradientOrange: "#ffc0a0",
-        gradientYellow: "#ffe7a0"
+        gradientYellow: "#ffe7a0",
+        hardOrange: "#ff6b22"
       },
     },
   },

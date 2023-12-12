@@ -5,6 +5,7 @@ import RootNavigator from './src/components/Navigation/RootNavigator';
 import ExplorePage from './src/pages/ExplorePage/ExplorePage';
 import { Text } from 'react-native';
 import CameraComponent from './src/components/CameraComponent/CameraComponent';
+import ImageDetailPage from './src/pages/ImageDetailPage/ImageDetailPage';
 export default function App() {
   return (
     <NavigationContainer>
@@ -17,7 +18,8 @@ export default function App() {
       {/* <LoginPage/> */}
       {/* <CameraComponent /> */}
       {/* <LoginPage/> */}
-      <RootNavigator/>
+      {/* <RootNavigator/> */}
+      <ImageDetailPage />
     </NavigationContainer>
   );
 }
