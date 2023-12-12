@@ -26,26 +26,27 @@ const IMAGEDETAILDATA: TImageDetailPageProps = {
 const ImageDetailPage:React.FC<TImageDetailPageProps> = ({ imageId, image, userId, userImage, coords, timestamp }) => {
   return (
     <LinearGradient className="flex-1 mt-14" colors={['#ffc0a066', '#ffe7a066']}>
-      <View className="flex flex-row">
-        <View className="py-2 flex-row items-center" >
-          <Image 
-            source={{ uri: IMAGEDETAILDATA.userImage }}
-            className="w-[25] h-[25] rounded-full ml-2"
-          />
-          <Text className="ml-1 font-bold">{IMAGEDETAILDATA.userName}</Text>
-        </View>
-        <Text className="flex-1 self-center">11 weeks ago</Text>
+      <View className="py-2 flex-row items-center" >
+        <Image 
+          source={{ uri: IMAGEDETAILDATA.userImage }}
+          className="w-[25] h-[25] rounded-full ml-2"
+        />
+        <Text className="ml-1 self-center font-bold">{IMAGEDETAILDATA.userName}</Text>
       </View>
       <Image 
         source={{ uri: IMAGEDETAILDATA.image }}
         className="w-full aspect-square"
       />
+
       <View className="flex flex-row items-center p-2">
         <Icon 
           name="map-pin"
           size={20}
         />
-        <Text className="ml-1 text-md">Klodzko</Text>
+        <View className="flex-1 flex-row justify-between">
+          <Text className="ml-1 text-md">Klodzko</Text>
+          <Text className="text-gray-700">22.11.23</Text>
+        </View>
       </View>
 
     </LinearGradient>
