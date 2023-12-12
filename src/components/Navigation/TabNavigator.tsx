@@ -29,11 +29,14 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator
-      // barStyle={{backgroundColor: "#874646"}}
+      
       screenOptions={({ route }) => ({
         tabBarStyle: { backgroundColor: "#ffefbf" },
         tabBarActiveTintColor: "#ff6b22",
         tabBarInactiveTintColor: "gray",
+        headerStyle: {
+          backgroundColor: "#ffc0a0"
+        },
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === "Home") {
             return (
