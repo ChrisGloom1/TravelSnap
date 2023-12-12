@@ -71,7 +71,7 @@ const ProfileSetupPage = () => {
     })();
 
    
-  }, [image, location]);
+  }, [image]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -159,7 +159,7 @@ const ProfileSetupPage = () => {
           {generalLocation}
         </Text>
         <Input placeholderText="Bio" onInputChange={handleBioChange} />
-        <View className="flex-1 items-center">
+        <View className="flex items-center">
           <ButtonBlue label="Continue" onPress={handleProfileUpdate} />
         </View>
       </View>

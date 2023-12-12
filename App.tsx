@@ -18,8 +18,8 @@ export default function App() {
       {/* <LoginPage/> */}
       {/* <CameraComponent /> */}
       {/* <LoginPage/> */}
-      {/* <RootNavigator/> */}
-      <ImageDetailPage />
+      <RootNavigator/>
+      {/* <ImageDetailPage /> */}
     </NavigationContainer>
   );
 }

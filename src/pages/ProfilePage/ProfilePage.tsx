@@ -161,6 +161,8 @@ import MapView, { Marker } from "react-native-maps";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../components/Navigation/RootNavigator";
 import { useNavigation } from "@react-navigation/native";
+import ButtonBlue from "../../components/Button/ButtonBlue";
+import { LinearGradient } from "expo-linear-gradient";
 
 export type ProfilePageNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;
@@ -239,13 +241,22 @@ function ProfilePage() {
 
   return (
     <ScrollView>
-      <Text>ProfilePage</Text>
-      <Image source={{ uri: profileImg }} className="w-8 h-8 rounded-full" />
-      <Text>{bio}</Text>
-      <Button
-              title="Edit profile"
-              onPress={() => navigation.navigate("ProfileSetupPage")}
-            />
+      <LinearGradient colors={['#ffc0a0', '#ffe7a0']}>
+        <View className="flex items-center">
+          <Text className="font-bold text-2xl p-2">{username}</Text>
+          <Image source={{ uri: profileImg }} className="w-64 h-64 rounded-full mb-2" />
+        </View>
+        <View className="p-4">
+          <Text className="font-bold">About: 
+            <Text className="font-normal"> {bio}</Text>
+          </Text>
+        </View>
+          <ButtonBlue
+            label="Edit profile"
+            onPress={() => navigation.navigate("ProfileSetupPage")}
+          />
+      </LinearGradient>
+
       {posts.length > 0 ? (
         posts.map((post) => (
           <View key={Math.random()}>
@@ -285,7 +296,7 @@ function ProfilePage() {
           </View>
         ))
       ) : (
-        <Text>Loading...</Text>
+        <Text className="p-2">No images to show. Try posting a picture!</Text>
       )}
     </ScrollView>
   );
