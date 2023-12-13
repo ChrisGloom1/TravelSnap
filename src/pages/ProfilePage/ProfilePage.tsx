@@ -154,6 +154,7 @@ import {
   orderBy,
   QueryDocumentSnapshot,
   doc,
+  where,
 } from "firebase/firestore";
 import { db, auth } from "../../../firebase";
 import * as Location from "expo-location";
@@ -173,6 +174,7 @@ function ProfilePage() {
   const [profileImg, setProfileImg] = useState<string>("");
   const [bio, setBio] = useState<string>("");
   const [locationName, setLocationName] = useState<string>("");
+  
 
   useEffect(() => {
     const userDocRef = doc(db, `users`, userId);
@@ -194,7 +196,8 @@ function ProfilePage() {
 
     const unsubscribePosts = onSnapshot(
       query(
-        collection(db, `posts/${userId}/userPosts`),
+        collection(db, 'posts'), //(db, `posts/${userId}/userPosts`)
+        where("userID", "==", userId),
         orderBy("timestamp", "desc")
       ),
       (snapshot) => {

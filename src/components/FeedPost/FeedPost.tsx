@@ -23,14 +23,14 @@ const FeedPost = ({ username, image, caption, userImage, locationName, timestamp
   }
   
   const convertTimestamp = (timestamp: Timestamp): string => {
-    const date = timestamp.toDate(); // Konwersja Timestamp na obiekt Date
+    const date = timestamp.toDate(); 
   
-    // Poniżej możesz dostosować formatowanie daty i godziny według własnych preferencji
+    
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych miesięcy
-    const day = date.getDate().toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych dni
-    const hours = date.getHours().toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych godzin
-    const minutes = date.getMinutes().toString().padStart(2, "0"); // Dodaj zero z przodu dla jednocyfrowych minut
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); 
+    const day = date.getDate().toString().padStart(2, "0"); 
+    const hours = date.getHours().toString().padStart(2, "0"); 
+    const minutes = date.getMinutes().toString().padStart(2, "0"); 
   
     // Zwróć sformatowaną datę i godzinę
     return `${day}.${month}.${year} ${hours}:${minutes}`;

@@ -71,7 +71,7 @@ const ProfileSetupPage = () => {
     })();
 
    
-  }, [image, location]);
+  }, [image]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({

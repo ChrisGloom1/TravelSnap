@@ -10,6 +10,7 @@ import { addDoc, collection, serverTimestamp, updateDoc, doc, getDoc } from 'fir
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Input from '../../components/Input/Input';
 import * as Location from "expo-location";
+import Autocomplete from 'react-native-autocomplete-input';
 
 type AddPostScreenRouteProp = RouteProp<RootStackParamList, "AddPost">;
 
@@ -24,6 +25,8 @@ const AddPostPage = () => { //{item} : Props
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState<string>('');
   const [location, setLocation] = useState<Location.LocationObject>();
+  const [cityName, setCityName] = useState<string>("");
+  const [countryName, setCountryName] = useState<string>("");
 
   useEffect(() => {
     (async () => {
@@ -36,8 +39,10 @@ const AddPostPage = () => { //{item} : Props
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
       console.log("LOCATION FROM ADDPOST USEEFFECT: " + location);
+
+      findLocationName(location.coords.latitude, location.coords.longitude);
     })();
-  }, [location])
+  }, [location, cityName])
   
   const uploadPost = async () => {
     if (loading) return;
@@ -53,17 +58,20 @@ const AddPostPage = () => { //{item} : Props
 
     try {
       // 1. Create a post and add it to firestore 'posts' collection
-      const userPostsRef = collection(db, 'posts', userId, 'userPosts');
+      const userPostsRef = collection(db, 'posts'); // (db, 'posts', userId, 'userPosts')
       const docRef = await addDoc(userPostsRef, {
+        userID: auth.currentUser!.uid,
         caption: caption,
         timestamp: serverTimestamp(),
-        coords: coords
+        coords: coords,
+        city: cityName,
+        country: countryName
       });
 
       console.log("New post added with ID", docRef.id);
 
       // 2. Upload the image to firebase storage with the post ID
-      const imageRef = ref(storage, `posts/${userId}/userPosts/${docRef.id}/image`);
+      const imageRef = ref(storage, `posts/${docRef.id}/image`); //(storage, `posts/${userId}/userPosts/${docRef.id}/image`)
 
       const response = await fetch(image);
       const blob = await response.blob();
@@ -79,7 +87,7 @@ const AddPostPage = () => { //{item} : Props
       // 5. Get a download URL from Firebase Storage and update the original post w/image
       const downloadURL = await getDownloadURL(imageRef);
 
-      await updateDoc(doc(db, 'posts', userId, 'userPosts', docRef.id), {
+      await updateDoc(doc(db, 'posts', docRef.id), { //(db, 'posts', userId, 'userPosts', docRef.id)
         image: downloadURL
       });
 
@@ -92,11 +100,24 @@ const AddPostPage = () => { //{item} : Props
     }
   };
 
+  const findLocationName = async (lat: number, long: number) => {
+    let reverseGeocode = await Location.reverseGeocodeAsync({
+      latitude: lat,
+      longitude: long,
+    });
+
+    if (reverseGeocode && reverseGeocode.length > 0) {
+      setCityName(reverseGeocode[0]?.city || "Unknown Location");
+      setCountryName(reverseGeocode[0]?.country || "Unknown Country");
+    }
+  };
+
   return (
     <View>
       <Text>AddPostPage</Text>
-      <Image source={{uri: image}}/>
+      <Image source={{uri: image}} className="w-8 h-8 rounded-full"/>
       <Input onInputChange={setCaption} placeholderText='Add caption'/>
+      <Text>{cityName}</Text>
       <Button title={loading ? "Uploading..." : "Upload"} onPress={uploadPost}/>
     </View>
   )
