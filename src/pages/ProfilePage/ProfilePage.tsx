@@ -164,6 +164,7 @@ import { useNavigation } from "@react-navigation/native";
 import ButtonBlue from "../../components/Button/ButtonBlue";
 import { LinearGradient } from "expo-linear-gradient";
 import GalleryPost from "../../components/GalleryPost/GalleryPost";
+import Icon from "react-native-vector-icons/Feather"
 
 export type ProfilePageNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;
@@ -322,22 +323,36 @@ function ProfilePage() {
           <Text className="p-2">No images to show. Try posting a picture!</Text>
         )} */}
       </ScrollView>
+      {posts.length > 0 ? (
       <FlatList
         numColumns={3}
         data={posts}
         keyExtractor={(item) => item.postID.toString()}
         refreshing={false}
-        onRefresh={() => console.log("Refreshed")}
         renderItem={({ item }) => (
           <GalleryPost
             key={item.postID}
-            userName={item.username}
+            postID={item.postID}
+            username={item.username}
+            userImage={item.userImage}
             image={item.image}
-            userId={parseInt(userId)}
-            location="Unknown location"
+            caption={item.caption}
+            timestamp={item.timestamp}
+            latitude={item.latitude}
+            longitude={item.longitude}
+            locationName={item.locationName}
           />
+        )}
+      />
+      ) : (
+        <View className="items-center justify-center mt-24">
+          <Icon 
+            name="camera-off"
+            size={50}
+          />
+          <Text className="p-2">No posts yet</Text>
+        </View>
       )}
-    />
   </View>
   );
 }
