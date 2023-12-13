@@ -1,23 +1,51 @@
 import React from 'react'
 import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native'
+import { Timestamp } from 'firebase/firestore'
+import { useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '../Navigation/RootNavigator'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 type TGalleryPostProps = {
-  userId: number
-  userName: string
-  image: string
-  location: string
+  postID: string,
+  username: string;
+  userImage: string;
+  image: string;
+  caption: string;
+  timestamp: Timestamp;
+  latitude: number;
+  longitude: number;
+  locationName: string
 }
 
-const handleOnImagePress = (image: string) => {
-  // insert navigation logic here
-  console.log(image)
-}
+export type ProfilePageNavigationProp =
+  NativeStackNavigationProp<RootStackParamList>;
 
-const GalleryPost: React.FC<TGalleryPostProps> = ({ userName, image, location }) => {
+
+
+const GalleryPost: React.FC<TGalleryPostProps> = ({
+  postID,
+  username,
+  userImage,
+  image,
+  caption,
+  timestamp,
+  latitude,
+  longitude,
+  locationName
+}) => {
+
+  const navigation = useNavigation<ProfilePageNavigationProp>();
+
+  const handleOnImagePress = (postID:string, username:string, userImage:string, image:string, caption:string, timestamp:Timestamp, latitude:number, longitude:number, locationName:string) => {
+    // insert navigation logic here
+    console.log(postID, username, userImage, image, caption, timestamp, latitude, longitude, locationName)
+   navigation.navigate("ImageDetail") 
+  }
+
   return (
     <TouchableOpacity 
       className='w-1/3 bg-transparent' 
-      onPress={() => handleOnImagePress(image)}
+      onPress={() => handleOnImagePress(postID, username, userImage, image, caption, timestamp, latitude, longitude, locationName)}
     >
     <ImageBackground
       source={{uri: image}}

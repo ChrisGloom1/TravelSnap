@@ -6,6 +6,8 @@ import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
 import LandingPage from '../../pages/LandingPage/LandingPage';
 import ProfileSetupPage from '../../pages/ProfileSetupPage/ProfileSetupPage';
+import ImageDetailPage from '../../pages/ImageDetailPage/ImageDetailPage';
+import { Timestamp } from '@firebase/firestore-types';
 
 export type RootStackParamList = {
     LandingPage: undefined;
@@ -15,6 +17,7 @@ export type RootStackParamList = {
     Login: undefined;
     ChoosePhoto: undefined;
     AddPost: { image: string };
+    // ImageDetail: {postID:string, username:string, userImage:string, image:string, caption:string, timestamp:Timestamp, latitude:number, longitude:number, locationName:string}
 }
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -25,6 +28,7 @@ const RootNavigator = () => {
       
       <RootStack.Screen name="LandingPage" component={LandingPage}/>
       <RootStack.Screen name="ProfileSetupPage" component={ProfileSetupPage}/>
+      
         
       <RootStack.Group>
         <RootStack.Screen name="Main" component={TabNavigator}/>
@@ -41,6 +45,10 @@ const RootNavigator = () => {
       <RootStack.Group>
         <RootStack.Screen name='Register' component={RegisterPage}/>
       </RootStack.Group>
+
+      {/* <RootStack.Group>
+        <RootStack.Screen name='ImageDetail' component={ImageDetailPage}/>
+      </RootStack.Group> */}
       
     </RootStack.Navigator>
   )

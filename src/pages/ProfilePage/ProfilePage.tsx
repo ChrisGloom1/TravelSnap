@@ -277,50 +277,6 @@ function ProfilePage() {
           </View>
         </LinearGradient>
         <View className="border-b border-gray-400"/>
-
-        {/* Mer kode under det som er kommentert ut */}
-
-        {/* {posts.length > 0 ? (
-          posts.map((post) => (
-            <View key={Math.random()}>
-              <FeedPost
-                key={post.postID}
-                postID={post.postID}
-                userImage={profileImg}
-                image={post.image}
-                caption={post.caption}
-                username={post.username}
-                latitude={post.latitude}
-                longitude={post.longitude}
-                timestamp={post.timestamp}
-                locationName={post.locationName}
-              />
-              <MapView
-                style={{ height: 200 }}
-                key={Math.random()}
-                initialRegion={{
-                  latitude: post.latitude,
-                  longitude: post.longitude,
-                  latitudeDelta: 0.005,
-                  longitudeDelta: 0.005,
-                }}
-              >
-                {post.latitude && post.longitude && (
-                  <Marker
-                    coordinate={{
-                      latitude: post.latitude,
-                      longitude: post.longitude,
-                    }}
-                    title="Photo location"
-                    identifier="Photo location"
-                  />
-                )}
-              </MapView>
-            </View>
-          ))
-        ) : (
-          <Text className="p-2">No images to show. Try posting a picture!</Text>
-        )} */}
       </ScrollView>
       <FlatList
         numColumns={3}
@@ -331,10 +287,15 @@ function ProfilePage() {
         renderItem={({ item }) => (
           <GalleryPost
             key={item.postID}
-            userName={item.username}
+            postID={item.postID}
+            username={item.username}
+            userImage={item.userImage}
             image={item.image}
-            userId={parseInt(userId)}
-            location="Unknown location"
+            caption={item.caption}
+            timestamp={item.timestamp}
+            latitude={item.latitude}
+            longitude={item.longitude}
+            locationName={item.locationName}
           />
       )}
     />
