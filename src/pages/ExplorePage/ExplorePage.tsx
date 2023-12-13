@@ -227,7 +227,8 @@ const DATA: TPostProps[] = [
 const ExplorePage = () => {
   return (
     <LinearGradient 
-      className='flex-1 flex-row bg-white'
+      // className='flex-1 flex-row bg-white'
+      style={{flex: 1, flexDirection: 'row', backgroundColor: 'white'}}
       colors={['#ffc0a066', '#ffe7a066']}
     >
       <FlatList 

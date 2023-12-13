@@ -47,10 +47,13 @@ const LoginPage = () => {
 
   return (
     <LinearGradient 
-      className="flex-1 items-center justify-center bg-gray-100"
+      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
       colors={['#ffc0a0', '#ffe7a0']}
     >
-      <View className=" w-[90%] h-[85%] items-center justify-center mt-9">
+      <View 
+      // className=" w-[90%] h-[85%] items-center justify-center mt-9"
+        style={{width: '90%', height: '85%', alignItems: 'center', justifyContent: 'center', marginTop: 36}}
+      >
         <WelcomeToTravelSnap />
         <Text>Log in</Text>
         <Input 
@@ -64,9 +67,16 @@ const LoginPage = () => {
           secureTextEntry={true}
         />
 
-        <View className="flex-1 items-center">
+        <View 
+          // className="flex-1 items-center"
+          style={{flex: 1, alignItems: 'center'}}
+        >
           <TouchableOpacity onPress={goToRegisterPage}>
-            <Text className="p-4 text-gray-700 font-bold">No user? Click here to create a user</Text>
+            <Text 
+            // className="p-4 text-gray-700 font-bold"
+            style={{padding: 4, color: '#4b5563', fontWeight: 'bold'}}
+            
+            >No user? Click here to create a user</Text>
           </TouchableOpacity>
           <ButtonBlue 
             label="Log in"

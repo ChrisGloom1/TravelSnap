@@ -44,13 +44,15 @@ const GalleryPost: React.FC<TGalleryPostProps> = ({
 }) => {
   return (
     <TouchableOpacity 
-      className='w-1/3' 
+      // className='w-1/3'
+      style={{width: '33.333%'}} 
       onPress={() => handleOnImagePress(postID, username, userImage, image, caption, timestamp, latitude, longitude, locationName)}
     >
     <ImageBackground
       source={{uri: image}}
       resizeMode='contain'
-      className='aspect-square' 
+      // className='aspect-square' 
+      style={{aspectRatio: 1}}
     />
     </TouchableOpacity>
   )

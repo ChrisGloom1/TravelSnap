@@ -147,19 +147,31 @@ const ProfileSetupPage = () => {
   // };
 
   return (
-    <View className="flex-1 items-center justify-center bg-gray-100">
-      <View className=" w-[90%] h-[85%] items-center justify-center pt-9">
+    <View 
+      // className="flex-1 items-center justify-center bg-gray-100"
+      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+      >
+      <View 
+        // className=" w-[90%] h-[85%] items-center justify-center pt-9"
+        style={{width: '90%', height: '85%', alignItems: 'center', justifyContent: 'center', paddingTop: 36}}
+      >
         <WelcomeToTravelSnap />
         <SetupProfileImage onPress={pickImage} image={image || ""} />
         {/* <Input
           placeholderText="Username"
           onInputChange={handleUsernameChange}
         /> */}
-        <Text className="mr-2">
+        <Text 
+          // className="mr-2"
+          style={{marginRight: 8}}
+        >
           {generalLocation}
         </Text>
         <Input placeholderText="Bio" onInputChange={handleBioChange} />
-        <View className="flex items-center">
+        <View 
+          // className="flex items-center"
+          style={{flexDirection: 'row', alignItems: 'center'}}
+        >
           <ButtonBlue label="Continue" onPress={handleProfileUpdate} />
         </View>
       </View>
