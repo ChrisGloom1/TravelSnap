@@ -17,17 +17,19 @@ export type RootStackParamList = {
     Login: undefined;
     ChoosePhoto: undefined;
     AddPost: { image: string };
-    // ImageDetail: {postID:string, username:string, userImage:string, image:string, caption:string, timestamp:Timestamp, latitude:number, longitude:number, locationName:string}
+    ImageDetail: { postID: string, username: string, userImage: string, image: string, caption: string, timestamp: Timestamp, latitude: number, longitude: number, locationName: string }
 }
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
   return (
-    <RootStack.Navigator initialRouteName='Login' screenOptions={{headerShown: false}}>
+    <RootStack.Navigator initialRouteName='Login'>
       
       <RootStack.Screen name="LandingPage" component={LandingPage}/>
       <RootStack.Screen name="ProfileSetupPage" component={ProfileSetupPage}/>
+      <RootStack.Screen name="ImageDetail" component={ImageDetailPage}/>
+
       
         
       <RootStack.Group>
@@ -46,9 +48,9 @@ const RootNavigator = () => {
         <RootStack.Screen name='Register' component={RegisterPage}/>
       </RootStack.Group>
 
-      {/* <RootStack.Group>
-        <RootStack.Screen name='ImageDetail' component={ImageDetailPage}/>
-      </RootStack.Group> */}
+
+        
+
       
     </RootStack.Navigator>
   )

@@ -24,6 +24,7 @@ const AddPostPage = () => { //{item} : Props
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState<string>('');
   const [location, setLocation] = useState<Location.LocationObject>();
+  const [locationName, setLocationName] = useState<string>("");
 
   useEffect(() => {
     (async () => {
@@ -35,9 +36,21 @@ const AddPostPage = () => { //{item} : Props
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log("LOCATION FROM ADDPOST USEEFFECT: " + location);
+      console.log("LOCATION FROM ADDPOST USEEFFECT: " + JSON.stringify(location))
+      findLocationName(location.coords.latitude, location.coords.longitude);
     })();
   }, [location])
+
+  const findLocationName = async (lat: number, long: number) => {
+    let reverseGeocode = await Location.reverseGeocodeAsync({
+      latitude: lat,
+      longitude: long,
+    });
+
+    if (reverseGeocode && reverseGeocode.length > 0) {
+      setLocationName(reverseGeocode[0]?.city || "Unknown Location");
+    }
+  };
   
   const uploadPost = async () => {
     if (loading) return;
@@ -93,9 +106,9 @@ const AddPostPage = () => { //{item} : Props
   };
 
   return (
-    <View>
-      <Text>AddPostPage</Text>
+    <View className="flex-1 justify-center items-center">
       <Image source={{uri: image}}/>
+      <Text>{locationName}</Text>
       <Input onInputChange={setCaption} placeholderText='Add caption'/>
       <Button title={loading ? "Uploading..." : "Upload"} onPress={uploadPost}/>
     </View>

@@ -1,5 +1,5 @@
 import { View, Text, Image } from "react-native"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { LinearGradient } from "expo-linear-gradient"
 import Icon from 'react-native-vector-icons/Feather'
 import { Timestamp } from "firebase/firestore"
@@ -21,18 +21,18 @@ type TImageDetailPageProps = {
   locationName: string
 }
 
-// type ImageDetailScreenRouteProp = RouteProp<RootStackParamList, "ImageDetail">;
+export type ProfilePageNavigationProp =
+  NativeStackNavigationProp<RootStackParamList>;
 
-// export type ImageDetailScreenNavigationProp = CompositeNavigationProp<
-// BottomTabNavigationProp<TabStackParamList, "Details">,
-// NativeStackNavigationProp<RootStackParamList>
-// >
+type ImageDetailScreenRouteProp = RouteProp<RootStackParamList, "ImageDetail">;
 
-const ImageDetailPage = ({}) => {
+const ImageDetailPage= ({}) => {
 
-  // const navigation = useNavigation<ImageDetailScreenNavigationProp>();
-  // const {params: {postID: string} , username, userImage, image, caption, timestamp, latitude, longitude, locationName}} = useRoute<ImageDetailScreenRouteProp>();
-  
+  const {params: {postID, username, userImage, image, caption, timestamp, latitude, longitude, locationName}} = useRoute<ImageDetailScreenRouteProp>();
+
+  useEffect(() => {
+    console.log(locationName)
+  }, [locationName])
 
   return (
     <LinearGradient className="flex-1 mt-14" colors={['#ffc0a066', '#ffe7a066']}>
@@ -54,9 +54,15 @@ const ImageDetailPage = ({}) => {
           size={20}
         />
         <View className="flex-1 flex-row justify-between">
-          <Text className="ml-1 text-md">{locationName}</Text>
-          <Text className="text-gray-700">{}</Text>
+          <Text className="ml-1 text-md">{locationName ? locationName : "Unknown location"}</Text>
+          <Text className="text-gray-700">{timestamp.toString()}</Text>
         </View>
+      </View>
+      <View className="m-2">
+        <Text className="font-bold">{username}
+          <Text className="font-normal"> {caption}</Text>
+        </Text>
+        
       </View>
 
     </LinearGradient>
