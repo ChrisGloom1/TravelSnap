@@ -105,85 +105,63 @@ function ProfilePage() {
   }
 
   return (
-    <LinearGradient colors={['#ffc0a066', '#ffe7a066']} style={{height: 200}}>
+    <LinearGradient colors={['#ffc0a066', '#ffe7a066']}>
       <View>
-        <View style={{}}>
-          <View 
-          style={{display: "flex", flexDirection: 'row', justifyContent: 'space-between'}}
-          >
+        <View>
+          <View style={{display: "flex", flexDirection: 'row', justifyContent: 'space-between'}}>
             <ButtonBlue
               label="Log out"
               onPress={() => handleLogout()}
-              // onPress={() => navigation.navigate("ProfileSetupPage")}
             />
-
             <ButtonBlue
               label="Edit profile"
               onPress={() => navigation.navigate("ProfileSetupPage")}
             />
           </View>
-        <View 
-        style={{display: "flex", flexDirection: 'row', padding: 16, justifyContent: 'space-between'}}
-        >
-          <View style={{height: 100}}>
-            {profileImg ? 
-              <Image 
-              source={{ uri: profileImg }} 
-              style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}
-              /> 
-              : 
-              <Image 
-              source={require('../../../assets/avatar.png')}
-              style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}
-              /> }
-            
-          </View>
-          <View 
-          // className="ml-4 flex-1"
-          style={{marginLeft: 16, flex: 1}}
-          >
-            <Text 
-            // className="font-bold text-xl mb-1"
-            style={{fontWeight: 'bold', fontSize: 24, marginBottom: 4}}
-            >{username}</Text>
-            <View>
-              <Text 
-              // className="font-bold"
-              style={{fontWeight: 'bold'}}
-              >About: 
-                <Text 
-                // className="font-normal"
-                style={{fontWeight: 'normal'}}
-                > {bio}</Text>
-              </Text>
+          <View style={{display: "flex", flexDirection: 'row', padding: 16, justifyContent: 'space-between'}}>
+            <View style={{height: 100}}>
+              {profileImg ? 
+                <Image 
+                source={{ uri: profileImg }} 
+                style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}
+                /> 
+                : 
+                <Image 
+                source={require('../../../assets/avatar.png')}
+                style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}
+                /> }
             </View>
+            <View style={{marginLeft: 16, flex: 1}}>
+              <Text style={{fontWeight: 'bold', fontSize: 24, marginBottom: 4}}>{username}</Text>
+              <View>
+                <Text style={{fontWeight: 'bold'}}>About: <Text style={{fontWeight: 'normal'}}> {bio}</Text></Text>
+              </View>
+              </View>
             </View>
           </View>
-        </View>
-      <View 
-      // className="border-b border-gray-400"
-      style={{borderBottomColor: '#ccc', borderBottomWidth: 1}}
-      />
-    <FlatList
-      numColumns={3}
-      data={posts}
-      keyExtractor={(item) => item.postID.toString()}
-      refreshing={false}
-      onRefresh={() => console.log("Refreshed")}
-      renderItem={({ item }) => (
-        <GalleryPost
-        key={item.postID}
-        postID={item.postID}
-        username={item.username}
-        userImage={item.userImage}
-        image={item.image}
-        caption={item.caption}
-        timestamp={item.timestamp}
-        latitude={item.latitude}
-        longitude={item.longitude}
-        locationName={item.locationName}
-        />
-        )}
+          <View style={{borderBottomColor: '#ccc', borderBottomWidth: 1}}/>
+
+          <FlatList
+            numColumns={3}
+            data={posts}
+            keyExtractor={(item) => item.postID.toString()}
+            refreshing={false}
+            onRefresh={() => console.log("Refreshed")}
+            style={{height: "100%"}}
+            renderItem={({ item }) => (
+              <GalleryPost
+              key={item.postID}
+              postID={item.postID}
+              username={item.username}
+              userImage={item.userImage}
+              image={item.image}
+              caption={item.caption}
+              timestamp={item.timestamp}
+              latitude={item.latitude}
+              longitude={item.longitude}
+              locationName={item.locationName}
+            />
+          )}
         />
       </View>
     </LinearGradient>

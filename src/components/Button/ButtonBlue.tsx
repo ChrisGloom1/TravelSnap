@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient"
 type TButtonProps = {
   label: string
   onPress: ((event: GestureResponderEvent) => void) | undefined
+  disabled?: boolean | undefined
 }
 
 const ButtonBlue: React.FC<TButtonProps> = ({ label, onPress }) => {

@@ -28,7 +28,7 @@ export type FeedPostProps = {
   locationName: string;
 };
 
-const FeedPost: React.FC<FeedPostProps> = ({
+const FeedPost = ({
   postID,
   username,
   image,
@@ -36,8 +36,9 @@ const FeedPost: React.FC<FeedPostProps> = ({
   userImage,
   locationName,
   timestamp,
-}) => {
+}: FeedPostProps) => {
 
+  
   const [comment, setComment] = useState<string>("");
   const [comments, setComments] = useState<QueryDocumentSnapshot[]>([]);
   const [commentersUsername, setCommentersUsername] =
@@ -212,7 +213,7 @@ const FeedPost: React.FC<FeedPostProps> = ({
       {comments.length > 0 && (
         <View 
         // className="justify-start pr-2 pl-2 pt-1 pb-1"
-        style={{paddingHorizontal: 8, paddingVertical: 4}}
+        style={{justifyContent: "flex-start", paddingHorizontal: 8, paddingVertical: 4}}
         >
           {comments.map((comment) => (
             <View key={comment.id}>
@@ -227,14 +228,19 @@ const FeedPost: React.FC<FeedPostProps> = ({
               >
                 <Text 
                 // className="font-bold"
-                
+                style={{fontWeight: 'bold'}}
                 > {commentersUsername} </Text>
                 {comment.data().comment}
               </Text>
-              <TouchableOpacity onPress={() => deleteComment(comment.id)}>
-                <Icon name="delete" type="antdesign" />
-              </TouchableOpacity>
-
+              {commentersUsername == comment.data().username && (
+                <TouchableOpacity
+                  onPress={() => {
+                    deleteComment(comment.id);
+                  }}
+                >
+                  <Icon name="delete" type="antdesign" />
+                </TouchableOpacity>
+              )}
               <Moment element={Text} fromNow>
                 {comment.data().timestamp?.toDate().toString()}
               </Moment>
