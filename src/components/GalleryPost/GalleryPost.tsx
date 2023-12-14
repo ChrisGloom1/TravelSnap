@@ -40,7 +40,7 @@ export type ProfilePageNavigationProp =
       // insert navigation logic here
       console.log(postID, username, userImage, image, caption, timestamp, latitude, longitude, locationName)
   
-      navigation.navigate("ImageDetail", {postID:postID, username:username, userImage:userImage, image:image, caption:caption, timestamp:timestamp, latitude:latitude, longitude:longitude, locationName:locationName})
+      navigation.navigate("ImageDetail", {postID: postID, username: username, userImage: userImage, image: image, caption: caption, timestamp: timestamp, latitude: latitude, longitude: longitude, locationName: locationName})
     }
   
     return (

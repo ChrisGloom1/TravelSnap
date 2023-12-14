@@ -121,7 +121,6 @@ const TabPosts = (props: postsProps) => {
           };
 
     } else if (props.tabName == "Search") {
-        console.log("WEHEHE NO SEARCH YET");
         setIsFromSearchBar(true);
     }
   }, [db]);

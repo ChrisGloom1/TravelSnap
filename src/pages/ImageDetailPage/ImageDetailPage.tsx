@@ -127,6 +127,7 @@ import { RootStackParamList } from "../../components/Navigation/RootNavigator";
 import { LinearGradient } from "expo-linear-gradient";
 import ButtonBlue from "../../components/Button/ButtonBlue";
 import * as Location from "expo-location";
+import MapView, { Marker } from "react-native-maps";
 
 export type ImageDetailPageProps = {
   postID: string;
@@ -198,10 +199,8 @@ const ImageDetailPage = () => {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
-    const hours = date.getHours().toString().padStart(2, "0");
-    const minutes = date.getMinutes().toString().padStart(2, "0");
 
-    return `${day}.${month}.${year} ${hours}:${minutes}`;
+    return `${day}.${month}.${year}`;
   };
 
   const sendComment = async () => {
@@ -229,7 +228,7 @@ const ImageDetailPage = () => {
   };
 
   return (
-    <LinearGradient colors={['#ffc0a066', '#ffe7a066']} style={{height: "100%", justifyContent: 'center'}}>
+    <LinearGradient colors={['#ffc0a066', '#ffe7a066']} style={{height: "100%", justifyContent: 'center', paddingBottom: 48}}>
       <ScrollView>
 
         <View style={{width: '100%'}}>
@@ -248,6 +247,28 @@ const ImageDetailPage = () => {
         <View style={{paddingHorizontal: 8, paddingVertical: 8}}>
           <Text style={{marginRight: 8}}><Text style={{fontWeight: 'bold'}}>{username}</Text> {caption}</Text>
         </View>
+
+        <MapView
+              style={{ height: 200, margin: 12 }}
+              key={Math.random()}
+              initialRegion={{
+                latitude: latitude,
+                longitude: longitude,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
+              }}
+            >
+              {latitude && longitude && (
+                <Marker
+                  coordinate={{
+                    latitude: latitude,
+                    longitude: longitude,
+                  }}
+                  title="Photo location"
+                  identifier="Photo location"
+                />
+              )}
+            </MapView>
 
         <View style={{paddingHorizontal: 8, paddingVertical: 4, justifyContent: "center"}}>
           <View style={{display: "flex", flexDirection: "row", alignItems: "center", width: "90%"}}>
