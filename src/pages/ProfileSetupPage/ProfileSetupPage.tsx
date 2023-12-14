@@ -40,6 +40,8 @@ const ProfileSetupPage = () => {
   const [bio, setBio] = useState<string>();
   //const [address, setAddress] = useState<string>("");
   const [generalLocation, setGeneralLocation] = useState<string>("");
+  const [isBioChanged, setIsBioChanged] = useState<boolean>(false);
+  const [isImageChanged, setIsImageChanged] = useState<boolean>(false);
 
   const userID = auth.currentUser!.uid;
 
@@ -74,17 +76,17 @@ const ProfileSetupPage = () => {
    
   }, [image]);
 
-  const pickImage = async () => {
+ const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
     });
-    console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      setIsImageChanged(true);
     }
   };
 
@@ -100,15 +102,21 @@ const ProfileSetupPage = () => {
   // };
   const handleBioChange = async (text: string) => {
     setBio(text);
+    setIsBioChanged(true);
   };
+  
 
   const handleProfileUpdate = async () => {
-    await updateDoc(doc(db, "users", userID), {
-      profileBio: bio,
-    });
-    await updateDoc(doc(db, "users", userID), {
-      profileImg: image,
-    });
+    if (isBioChanged) {
+      await updateDoc(doc(db, "users", userID), {
+        profileBio: bio,
+      });
+    }
+    if (isImageChanged) {
+      await updateDoc(doc(db, "users", userID), {
+        profileImg: image,
+      });
+    }
 
     // if (username != "") {
     //   await updateDoc(doc(db, "users", userID), {
