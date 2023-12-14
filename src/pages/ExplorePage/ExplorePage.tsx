@@ -239,13 +239,13 @@ const ExplorePage = () => {
         refreshing={false}
         onRefresh={() => console.log("refreshing")}
         renderItem={({item}) => (
-          <GalleryPost 
-            key={item.imageId}
-            userId={item.userId}
-            userName={item.userName}
-            image={item.image}
-            location={item.location}
-          />
+          // <GalleryPost 
+          //   key={item.imageId}
+          //   postID={item.imageId.toString()}
+          //   username={item.userName}
+          //   image={item.image}
+          // />
+          <Text>{item.userName}</Text>
         )}
       >
         {/* <GalleryPost 
