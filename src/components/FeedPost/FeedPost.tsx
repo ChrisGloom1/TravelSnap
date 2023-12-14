@@ -195,7 +195,7 @@ const FeedPost = ({
       // className="justify-start pr-2 pl-2 pt-1 pb-1"
       style={{paddingHorizontal: 8, paddingVertical: 4}}
       >
-        <Image source={{ uri: userImage }} 
+        <Image source={{ uri: commentersProfileImg }} 
         // className="w-8 h-8 rounded-full" 
         style={{width: 32, height: 32, borderRadius: 16}}
         />
@@ -216,7 +216,7 @@ const FeedPost = ({
           {comments.map((comment) => (
             <View key={comment.id}>
               <Image
-                source={{ uri: commentersProfileImg }}
+                source={{ uri: comment.data().profileImg }}
                 // className="w-8 h-8 rounded-full"
                 style={{width: 32, height: 32, borderRadius: 16}}
               />
@@ -227,7 +227,7 @@ const FeedPost = ({
                 <Text 
                 // className="font-bold"
                 style={{fontWeight: 'bold'}}
-                > {commentersUsername} </Text>
+                > {comment.data().username} </Text>
                 {comment.data().comment}
               </Text>
               {commentersUsername == comment.data().username && (
