@@ -8,6 +8,7 @@ import CameraComponent from "../CameraComponent/CameraComponent";
 
 
 export type TabStackParamList = {
+  Main: undefined;
   Profile: undefined; // TODO - add param userId for inlogged user
   AddPhoto: undefined;
   Explore: undefined;

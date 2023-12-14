@@ -22,7 +22,7 @@ import * as Location from "expo-location";
 import { LinearGradient } from "expo-linear-gradient";
 
 export type ProfileSetupScreenNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<TabStackParamList, "Home">,
+  BottomTabNavigationProp<TabStackParamList, "Main">,
   NativeStackNavigationProp<RootStackParamList>
 >;
 
