@@ -11,13 +11,20 @@ import { getStorage } from "firebase/storage"
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyC8o8QspkmaBCqD7JTdE5hIHpVTuP05fh4",
-  authDomain: "travelsnap-60f9b.firebaseapp.com",
-  projectId: "travelsnap-60f9b",
-  storageBucket: "travelsnap-60f9b.appspot.com",
-  messagingSenderId: "64612321983",
-  appId: "1:64612321983:web:fe6eaf8d3b7dd37aca540a",
-  measurementId: "G-PFNVGHP617"
+
+  // apiKey: "AIzaSyA3BhuDd5f6o_Kgo0MrRi71PL0uLql8OTI",
+  // authDomain: "travel-snap-72662.firebaseapp.com",
+  // projectId: "travel-snap-72662",
+  // storageBucket: "travel-snap-72662.appspot.com",
+  // messagingSenderId: "3116379494",
+  // appId: "1:3116379494:web:672aa9d2dd99783cadaca7"
+
+  apiKey: "AIzaSyAIIpBON0C-TCpLkj1rt_SsJvYW8n7c4GQ",
+  authDomain: "travelsnap-e320c.firebaseapp.com",
+  projectId: "travelsnap-e320c",
+  storageBucket: "travelsnap-e320c.appspot.com",
+  messagingSenderId: "921776695852",
+  appId: "1:921776695852:web:2c7e21060c224ee29e7f89"
 };
 
 // Initialize Firebase

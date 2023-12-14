@@ -155,7 +155,7 @@ const FeedPost = ({
       </View>
 
       <View className="justify-start pr-2 pl-2 pt-1 pb-1">
-        <Image source={{ uri: userImage }} className="w-8 h-8 rounded-full" />
+        <Image source={{ uri: commentersProfileImg }} className="w-8 h-8 rounded-full" />
         <Input
           value={comment}
           onChangeText={setComment}

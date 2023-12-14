@@ -22,6 +22,8 @@ const CameraComponent = () => {
   const [type, setType] = useState<CameraType>(CameraType.back);
   const [camera, setCamera] = useState<Camera | null>(null);
   const [image, setImage] = useState<string | null>(null);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -44,6 +46,7 @@ const CameraComponent = () => {
     if (camera) {
       const data = await camera.takePictureAsync();
       setImage(data.uri);
+      setIsButtonDisabled(false);
     }
   }
 
@@ -59,6 +62,7 @@ const CameraComponent = () => {
     if (!result.canceled) {
       // setImage(result.assets[0].uri)
       setImage(result.assets[0].uri)
+      setIsButtonDisabled(false);
     }
   }
   
@@ -97,8 +101,8 @@ const CameraComponent = () => {
             </Button>
             <Button
               mode="outlined"
-              //onPress={() => printImageData(image)}
               onPress={() => navigation.navigate('AddPost', {image: image})}
+              disabled={isButtonDisabled}
             >
               ✅
             </Button>

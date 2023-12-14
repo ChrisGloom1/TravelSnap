@@ -10,7 +10,7 @@ import HomePage from "../../pages/HomePage/HomePage";
 
 export type TabStackParamList = {
   Home: undefined;
-  Profile: undefined; // TODO - add param userId for inlogged user
+  Profile: undefined; 
   AddPhoto: undefined;
   Explore: undefined;
 };

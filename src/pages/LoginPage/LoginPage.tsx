@@ -62,7 +62,7 @@ const LoginPage = () => {
 
         <View className="flex-1 items-center">
           <TouchableOpacity onPress={goToRegisterPage}>
-            <Text className="p-4 text-gray-700 font-bold">No user? Click here to create a user</Text>
+            <Text endk="p-4 text-gray-700 font-bold">No user? Click here to create a user</Text>
           </TouchableOpacity>
           <ButtonBlue 
             label="Log in"

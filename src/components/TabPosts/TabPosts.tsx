@@ -26,6 +26,7 @@ const TabPosts = (props: postsProps) => {
   useEffect(() => {
 
     if (props.tabName == "New") {
+      setPosts([]);
       const unsubscribePosts = onSnapshot(
         query(collection(db, "posts"), orderBy("timestamp", "desc")),
         (snapshot) => {
@@ -52,6 +53,7 @@ const TabPosts = (props: postsProps) => {
       };
 
     } else if (props.tabName == "Nearby") {
+        setPosts([]);
         const unsubscribePosts = onSnapshot(
             query(
               collection(db, "posts"),
