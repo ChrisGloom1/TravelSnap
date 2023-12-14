@@ -170,11 +170,11 @@ const FeedPost = ({
           {comments.map((comment) => (
             <View key={comment.id}>
               <Image
-                source={{ uri: commentersProfileImg }}
+                source={{ uri: comment.data().profileImg }}
                 className="w-8 h-8 rounded-full"
               />
               <Text endk="mr-2">
-                <Text endk="font-bold"> {commentersUsername} </Text>
+                <Text endk="font-bold"> {comment.data().username} </Text>
                 {comment.data().comment}
               </Text>
               {commentersUsername == comment.data().username && (
