@@ -6,7 +6,6 @@ import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import CameraComponent from "../CameraComponent/CameraComponent";
 import HomePage from "../../pages/HomePage/HomePage";
-import { styled } from "nativewind";
 
 
 export type TabStackParamList = {

@@ -24,14 +24,12 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
   return (
-    <RootStack.Navigator initialRouteName='Login' >
+    <RootStack.Navigator initialRouteName='Login' screenOptions={{headerStyle: {backgroundColor: "#ffc0a0"}}} >
       
       <RootStack.Screen name="LandingPage" component={LandingPage}/>
       <RootStack.Screen name="ProfileSetupPage" component={ProfileSetupPage}/>
       <RootStack.Screen name="ImageDetail" component={ImageDetailPage}/>
 
-      
-        
       <RootStack.Group>
         <RootStack.Screen name="Main" component={TabNavigator}/>
       </RootStack.Group>
@@ -47,10 +45,6 @@ const RootNavigator = () => {
       <RootStack.Group>
         <RootStack.Screen name='Register' component={RegisterPage}/>
       </RootStack.Group>
-
-
-        
-
       
     </RootStack.Navigator>
   )
