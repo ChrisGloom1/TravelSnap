@@ -27,6 +27,7 @@ const AddPostPage = () => { //{item} : Props
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState<string>('');
   const [location, setLocation] = useState<Location.LocationObject>();
+  const [locationName, setLocationName] = useState<string>("");
 
   useEffect(() => {
     (async () => {
@@ -38,9 +39,21 @@ const AddPostPage = () => { //{item} : Props
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log("LOCATION FROM ADDPOST USEEFFECT: " + location);
+      console.log("LOCATION FROM ADDPOST USEEFFECT: " + JSON.stringify(location))
+      findLocationName(location.coords.latitude, location.coords.longitude);
     })();
   }, [location])
+
+  const findLocationName = async (lat: number, long: number) => {
+    let reverseGeocode = await Location.reverseGeocodeAsync({
+      latitude: lat,
+      longitude: long,
+    });
+
+    if (reverseGeocode && reverseGeocode.length > 0) {
+      setLocationName(reverseGeocode[0]?.city || "Unknown Location");
+    }
+  };
   
   const uploadPost = async () => {
     if (loading) return;
