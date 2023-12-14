@@ -156,7 +156,7 @@ import {
   doc,
   where,
 } from "firebase/firestore";
-import { db, auth } from "../../../firebase";
+import { db, auth, storage } from "../../../firebase";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -177,6 +177,7 @@ function ProfilePage() {
   
 
   useEffect(() => {
+
     const userDocRef = doc(db, `users`, userId);
 
     // Pobierz dane użytkownika
@@ -204,8 +205,6 @@ function ProfilePage() {
         setPosts(
           snapshot.docs.map((doc: QueryDocumentSnapshot) => {
             const data = doc.data();
-            findLocationName(data.coords.latitude, data.coords.longitude);
-            console.log("LOCATION FROM PROFILEPAGE USEEFFECT: " + locationName);
             return {
               postID: doc.id,
               username: username,
@@ -215,7 +214,7 @@ function ProfilePage() {
               timestamp: data.timestamp,
               latitude: data.coords.latitude,
               longitude: data.coords.longitude,
-              locationName: locationName,
+              city: data.city
             };
           })
         );
@@ -262,7 +261,7 @@ function ProfilePage() {
               latitude={post.latitude}
               longitude={post.longitude}
               timestamp={post.timestamp}
-              locationName={post.locationName}
+              city={post.city}
             />
             <MapView
               style={{ height: 200 }}

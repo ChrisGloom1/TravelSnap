@@ -25,7 +25,7 @@ export type FeedPostProps = {
   timestamp: Timestamp;
   latitude: number;
   longitude: number;
-  locationName: string;
+  city: string;
 };
 
 const FeedPost = ({
@@ -34,7 +34,7 @@ const FeedPost = ({
   image,
   caption,
   userImage,
-  locationName,
+  city,
   timestamp,
 }: FeedPostProps) => {
   const [comment, setComment] = useState<string>("");
@@ -42,7 +42,7 @@ const FeedPost = ({
   const [commentersUsername, setCommentersUsername] =
     useState<string>("unknown user");
   const [commentersProfileImg, setCommentersProfileImg] =
-    useState<string>("unknown user");
+    useState<string>("");
 
   useEffect(() => {
     const unsubscribeComments = onSnapshot(
@@ -144,7 +144,7 @@ const FeedPost = ({
           
         </TouchableOpacity> */}
         <Text endk="text-2xl ml-2">💬</Text>
-        <Text endk="text-2xl ml-1">📍 {locationName}</Text>
+        <Text endk="text-2xl ml-1">📍 {city}</Text>
         <Text endk="text-2xl ml-2">{convertTimestamp(timestamp)}</Text>
       </View>
       <View className="justify-start pr-2 pl-2 pt-1 pb-1">
@@ -177,9 +177,15 @@ const FeedPost = ({
                 <Text endk="font-bold"> {commentersUsername} </Text>
                 {comment.data().comment}
               </Text>
-              <TouchableOpacity onPress={() => deleteComment(comment.id)}>
-                <Icon name="delete" type="antdesign" />
-              </TouchableOpacity>
+              {commentersUsername == comment.data().username && (
+                <TouchableOpacity
+                  onPress={() => {
+                    deleteComment(comment.id);
+                  }}
+                >
+                  <Icon name="delete" type="antdesign" />
+                </TouchableOpacity>
+              )}
 
               <Moment element={Text} fromNow>
                 {comment.data().timestamp?.toDate().toString()}

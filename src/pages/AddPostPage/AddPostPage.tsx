@@ -6,11 +6,10 @@ import { TabStackParamList } from '../../components/Navigation/TabNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import { db, storage, auth } from "../../../firebase";
-import { addDoc, collection, serverTimestamp, updateDoc, doc, getDoc } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, updateDoc, doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Input from '../../components/Input/Input';
 import * as Location from "expo-location";
-import Autocomplete from 'react-native-autocomplete-input';
 
 type AddPostScreenRouteProp = RouteProp<RootStackParamList, "AddPost">;
 
@@ -27,6 +26,8 @@ const AddPostPage = () => { //{item} : Props
   const [location, setLocation] = useState<Location.LocationObject>();
   const [cityName, setCityName] = useState<string>("");
   const [countryName, setCountryName] = useState<string>("");
+  const [username, setUsername] = useState<string>("unknown user");
+  const [profileImg, setProfileImg] = useState<string>("");
 
   useEffect(() => {
     (async () => {
@@ -41,8 +42,23 @@ const AddPostPage = () => { //{item} : Props
       console.log("LOCATION FROM ADDPOST USEEFFECT: " + location);
 
       findLocationName(location.coords.latitude, location.coords.longitude);
+
+      
     })();
-  }, [location, cityName])
+
+    const unsubscribeUser = onSnapshot(
+        doc(db, `users`, auth.currentUser!.uid),
+        (snapshot) => {
+          const userData = snapshot.data();
+          setUsername(userData?.username || "");
+          setProfileImg(userData?.profileImg || "");
+        }
+      );
+    
+      return () => {
+        unsubscribeUser();
+      }
+  }, [cityName])
   
   const uploadPost = async () => {
     if (loading) return;
@@ -61,6 +77,8 @@ const AddPostPage = () => { //{item} : Props
       const userPostsRef = collection(db, 'posts'); // (db, 'posts', userId, 'userPosts')
       const docRef = await addDoc(userPostsRef, {
         userID: auth.currentUser!.uid,
+        username: username,
+        profileImg: profileImg,
         caption: caption,
         timestamp: serverTimestamp(),
         coords: coords,
@@ -117,7 +135,7 @@ const AddPostPage = () => { //{item} : Props
       <Text>AddPostPage</Text>
       <Image source={{uri: image}} className="w-8 h-8 rounded-full"/>
       <Input onInputChange={setCaption} placeholderText='Add caption'/>
-      <Text>{cityName}</Text>
+      <Text>{cityName.length > 0 ? cityName : "Please wait, loading location..."}</Text>
       <Button title={loading ? "Uploading..." : "Upload"} onPress={uploadPost}/>
     </View>
   )
