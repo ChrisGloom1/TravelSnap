@@ -272,7 +272,7 @@ function ProfilePage() {
             <View>
               <Image source={{ uri: profileImg }} 
               // className="w-28 h-28 rounded-full mb-2" 
-              style={{width: 112, height: 112, borderRadius: "50%", marginBottom: 8}}
+              style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}
               />
             </View>
             <View 

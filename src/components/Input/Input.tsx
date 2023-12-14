@@ -22,7 +22,7 @@ const Input: React.FC<TInputProps> = ({placeholderText, onInputChange, secureTex
     <TextInput 
       // className="bg-white rounded-xl w-full p-2 m-2" 
       // style={{elevation: 2}}
-      style={{backgroundColor: 'white', borderRadius: 8, width: '100%', padding: 8, margin: 8, elevation: 2}}
+      style={{backgroundColor: 'white', borderRadius: 8, width: '100%', padding: 12, margin: 8, elevation: 2}}
       placeholder={placeholderText} 
       value={inputValue} 
       onChange={handleOnChange} 

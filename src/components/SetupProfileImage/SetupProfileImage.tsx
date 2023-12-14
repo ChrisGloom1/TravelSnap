@@ -14,7 +14,7 @@ const SetupProfileImage: React.FC<TSetupProfileImageProps> = ({onPress}, {image}
       <ImageBackground source={image} resizeMode="cover">
       <View 
       // className="w-[175] h-[175] bg-gray-300 rounded-full items-center justify-center mb-4"
-      style={{width: 175, height: 175, backgroundColor: 'gray', borderRadius: "50%", alignItems: 'center', justifyContent: 'center', marginBottom: 16}}
+      style={{width: 175, height: 175, backgroundColor: 'gray', borderRadius: 175/2, alignItems: 'center', justifyContent: 'center', marginBottom: 16}}
       >
         <Text 
         // className="text-lg"
