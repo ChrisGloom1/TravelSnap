@@ -8,7 +8,7 @@ const WelcomeToTravelSnap = () => {
     >
       <Image 
         source={require('../../../assets/liggendelogo.png')}
-        style={{ width: 300, height: 50 }}
+        style={{ width: 300, height: 50, marginBottom: 64 }}
         resizeMode="contain"
       />
     </View>

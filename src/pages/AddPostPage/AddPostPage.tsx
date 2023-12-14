@@ -10,6 +10,9 @@ import { addDoc, collection, serverTimestamp, updateDoc, doc, getDoc } from 'fir
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Input from '../../components/Input/Input';
 import * as Location from "expo-location";
+import { LinearGradient } from 'expo-linear-gradient';
+import ButtonBlue from '../../components/Button/ButtonBlue';
+import WelcomeToTravelSnap from '../../components/WelcomeToTravelSnap/WelcomeToTravelSnap';
 
 type AddPostScreenRouteProp = RouteProp<RootStackParamList, "AddPost">;
 
@@ -93,12 +96,11 @@ const AddPostPage = () => { //{item} : Props
   };
 
   return (
-    <View>
-      <Text>AddPostPage</Text>
-      <Image source={{uri: image}}/>
+    <LinearGradient style={{flex: 1, alignItems: "center", padding: 16}} colors={['#ffc0a0', '#ffe7a0']}>
+      <Image source={{uri: image}} style={{width: "90%", aspectRatio: 1, marginTop: 32, marginBottom: 16, borderRadius: 12}}/>
       <Input onInputChange={setCaption} placeholderText='Add caption'/>
-      <Button title={loading ? "Uploading..." : "Upload"} onPress={uploadPost}/>
-    </View>
+      <ButtonBlue label={loading ? "Uploading..." : "Upload"} onPress={uploadPost}/>
+    </LinearGradient>
   )
 }
 

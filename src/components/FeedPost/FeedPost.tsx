@@ -56,7 +56,7 @@ const FeedPost = ({ username, image, caption, userImage, locationName, timestamp
                 //"https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             }}
             // className="w-6 h-6 rounded-full"
-            style={{width: 24, height: 24, borderRadius: 50}}
+            style={{width: 24, height: 24, borderRadius: "50%"}}
           />
           <Text 
           // className="text-lg pl-2 text-sm"
