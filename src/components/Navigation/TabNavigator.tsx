@@ -5,11 +5,9 @@ import ExplorePage from "../../pages/ExplorePage/ExplorePage";
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import CameraComponent from "../CameraComponent/CameraComponent";
-import HomePage from "../../pages/HomePage/HomePage";
 
 
 export type TabStackParamList = {
-  Home: undefined;
   Profile: undefined; // TODO - add param userId for inlogged user
   AddPhoto: undefined;
   Explore: undefined;
@@ -37,15 +35,7 @@ const TabNavigator = () => {
           backgroundColor: "#ffc0a0"
         },
         tabBarIcon: ({ focused, color, size }) => {
-          if (route.name === "Home") {
-            return (
-              <Icon
-                name="home"
-                type="entypo"
-                color={focused ? "#ff6b22" : "gray"}
-              />
-            );
-          } else if (route.name === "Profile") {
+          if (route.name === "Profile") {
             return (
               <Icon
                 name="account"
@@ -73,10 +63,9 @@ const TabNavigator = () => {
         },
       })}
     >
-      <Tab.Screen name="Home" component={HomePage} />
-      <Tab.Screen name="Profile" component={ProfilePage} />
-      <Tab.Screen name="AddPhoto" component={CameraComponent} />
       <Tab.Screen name="Explore" component={ExplorePage} />
+      <Tab.Screen name="AddPhoto" component={CameraComponent} />
+      <Tab.Screen name="Profile" component={ProfilePage} />
     </Tab.Navigator>
   );
 };
