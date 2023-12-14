@@ -90,11 +90,12 @@ const TabPosts = (props: postsProps) => {
       };
 
     } else if (props.tabName == "Nearby") {
-      setPosts([]);
+        console.log()
+        setPosts([]);
         const unsubscribePosts = onSnapshot(
             query(
               collection(db, "posts"),
-              where("country", "==", "Polska"),
+              where("country", "==", props.countryName),
               orderBy("timestamp", "desc")
             ),
             (snapshot) => {
