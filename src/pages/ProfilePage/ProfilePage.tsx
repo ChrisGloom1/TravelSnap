@@ -116,9 +116,17 @@ function ProfilePage() {
         style={{display: "flex", flexDirection: 'row', padding: 16, justifyContent: 'space-between'}}
         >
           <View style={{height: 100}}>
-            <Image source={{ uri: profileImg }} 
-            style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}
-            />
+            {profileImg ? 
+              <Image 
+              source={{ uri: profileImg }} 
+              style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}
+              /> 
+              : 
+              <Image 
+              source={require('../../../assets/avatar.png')}
+              style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}
+              /> }
+            
           </View>
           <View 
           // className="ml-4 flex-1"
