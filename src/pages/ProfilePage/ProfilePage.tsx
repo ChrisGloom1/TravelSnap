@@ -93,9 +93,10 @@ function ProfilePage() {
       setLocationName(reverseGeocode[0]?.city || "Unknown Location");
     }
   };
+
   return (
-    <View>
-      <LinearGradient colors={['#ffc0a0', '#ffe7a0']} style={{height: 210}}>
+    <LinearGradient colors={['#ffc0a0', '#ffe7a0']} style={{height: 200}}>
+      <View>
         <View style={{}}>
           <View 
           style={{display: "flex", flexDirection: 'row', justifyContent: 'space-between'}}
@@ -141,7 +142,6 @@ function ProfilePage() {
             </View>
           </View>
         </View>
-      </LinearGradient>
       <View 
       // className="border-b border-gray-400"
       style={{borderBottomColor: '#ccc', borderBottomWidth: 1}}
@@ -151,24 +151,24 @@ function ProfilePage() {
       data={posts}
       keyExtractor={(item) => item.postID.toString()}
       refreshing={false}
-      style={{ height: "72%"}}
       onRefresh={() => console.log("Refreshed")}
       renderItem={({ item }) => (
         <GalleryPost
-          key={item.postID}
-          postID={item.postID}
-          username={item.username}
-          userImage={item.userImage}
-          image={item.image}
-          caption={item.caption}
-          timestamp={item.timestamp}
-          latitude={item.latitude}
-          longitude={item.longitude}
-          locationName={item.locationName}
+        key={item.postID}
+        postID={item.postID}
+        username={item.username}
+        userImage={item.userImage}
+        image={item.image}
+        caption={item.caption}
+        timestamp={item.timestamp}
+        latitude={item.latitude}
+        longitude={item.longitude}
+        locationName={item.locationName}
         />
-    )}
-  />
-</View>
+        )}
+        />
+      </View>
+    </LinearGradient>
   );
 }
 
