@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import ButtonBlue from "../../components/Button/ButtonBlue";
 import { LinearGradient } from "expo-linear-gradient";
 import GalleryPost from "../../components/GalleryPost/GalleryPost";
+import { signOut } from 'firebase/auth';
 
 export type ProfilePageNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;
@@ -94,6 +95,15 @@ function ProfilePage() {
     }
   };
 
+  const handleLogout = async () => {
+    await signOut(auth).then(() => {
+      // Sign-out successful.
+      navigation.navigate('Login')
+    }).catch((error) => {
+      console.log(error)
+    });
+  }
+
   return (
     <LinearGradient colors={['#ffc0a066', '#ffe7a066']} style={{height: 200}}>
       <View>
@@ -103,7 +113,7 @@ function ProfilePage() {
           >
             <ButtonBlue
               label="Log out"
-              onPress={() => console.log("Log out pressed")}
+              onPress={() => handleLogout()}
               // onPress={() => navigation.navigate("ProfileSetupPage")}
             />
 
