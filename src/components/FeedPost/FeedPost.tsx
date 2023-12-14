@@ -25,7 +25,7 @@ export type FeedPostProps = {
   timestamp: Timestamp;
   latitude: number;
   longitude: number;
-  locationName: string;
+  city: string;
 };
 
 const FeedPost = ({
@@ -34,17 +34,15 @@ const FeedPost = ({
   image,
   caption,
   userImage,
-  locationName,
+  city,
   timestamp,
 }: FeedPostProps) => {
-
-  
   const [comment, setComment] = useState<string>("");
   const [comments, setComments] = useState<QueryDocumentSnapshot[]>([]);
   const [commentersUsername, setCommentersUsername] =
     useState<string>("unknown user");
   const [commentersProfileImg, setCommentersProfileImg] =
-    useState<string>("unknown user");
+    useState<string>("");
 
   useEffect(() => {
     const unsubscribeComments = onSnapshot(

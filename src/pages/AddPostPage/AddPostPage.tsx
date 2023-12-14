@@ -6,7 +6,7 @@ import { TabStackParamList } from '../../components/Navigation/TabNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import { db, storage, auth } from "../../../firebase";
-import { addDoc, collection, serverTimestamp, updateDoc, doc, getDoc } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, updateDoc, doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Input from '../../components/Input/Input';
 import * as Location from "expo-location";
@@ -26,7 +26,10 @@ const AddPostPage = () => { //{item} : Props
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState<string>('');
   const [location, setLocation] = useState<Location.LocationObject>();
-  const [locationName, setLocationName] = useState<string>("");
+  const [cityName, setCityName] = useState<string>("");
+  const [countryName, setCountryName] = useState<string>("");
+  const [username, setUsername] = useState<string>("unknown user");
+  const [profileImg, setProfileImg] = useState<string>("");
 
   useEffect(() => {
     (async () => {
@@ -38,21 +41,26 @@ const AddPostPage = () => { //{item} : Props
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log("LOCATION FROM ADDPOST USEEFFECT: " + JSON.stringify(location))
+      console.log("LOCATION FROM ADDPOST USEEFFECT: " + location);
+
       findLocationName(location.coords.latitude, location.coords.longitude);
+
+      
     })();
-  }, [location])
 
-  const findLocationName = async (lat: number, long: number) => {
-    let reverseGeocode = await Location.reverseGeocodeAsync({
-      latitude: lat,
-      longitude: long,
-    });
-
-    if (reverseGeocode && reverseGeocode.length > 0) {
-      setLocationName(reverseGeocode[0]?.city || "Unknown Location");
-    }
-  };
+    const unsubscribeUser = onSnapshot(
+        doc(db, `users`, auth.currentUser!.uid),
+        (snapshot) => {
+          const userData = snapshot.data();
+          setUsername(userData?.username || "");
+          setProfileImg(userData?.profileImg || "");
+        }
+      );
+    
+      return () => {
+        unsubscribeUser();
+      }
+  }, [cityName])
   
   const uploadPost = async () => {
     if (loading) return;
@@ -68,17 +76,22 @@ const AddPostPage = () => { //{item} : Props
 
     try {
       // 1. Create a post and add it to firestore 'posts' collection
-      const userPostsRef = collection(db, 'posts', userId, 'userPosts');
+      const userPostsRef = collection(db, 'posts'); // (db, 'posts', userId, 'userPosts')
       const docRef = await addDoc(userPostsRef, {
+        userID: auth.currentUser!.uid,
+        username: username,
+        profileImg: profileImg,
         caption: caption,
         timestamp: serverTimestamp(),
-        coords: coords
+        coords: coords,
+        city: cityName,
+        country: countryName
       });
 
       console.log("New post added with ID", docRef.id);
 
       // 2. Upload the image to firebase storage with the post ID
-      const imageRef = ref(storage, `posts/${userId}/userPosts/${docRef.id}/image`);
+      const imageRef = ref(storage, `posts/${docRef.id}/image`); //(storage, `posts/${userId}/userPosts/${docRef.id}/image`)
 
       const response = await fetch(image);
       const blob = await response.blob();
@@ -94,7 +107,7 @@ const AddPostPage = () => { //{item} : Props
       // 5. Get a download URL from Firebase Storage and update the original post w/image
       const downloadURL = await getDownloadURL(imageRef);
 
-      await updateDoc(doc(db, 'posts', userId, 'userPosts', docRef.id), {
+      await updateDoc(doc(db, 'posts', docRef.id), { //(db, 'posts', userId, 'userPosts', docRef.id)
         image: downloadURL
       });
 
@@ -104,6 +117,18 @@ const AddPostPage = () => { //{item} : Props
     } catch (error) {
       console.error("Error uploading post:", error);
       setLoading(false);
+    }
+  };
+
+  const findLocationName = async (lat: number, long: number) => {
+    let reverseGeocode = await Location.reverseGeocodeAsync({
+      latitude: lat,
+      longitude: long,
+    });
+
+    if (reverseGeocode && reverseGeocode.length > 0) {
+      setCityName(reverseGeocode[0]?.city || "Unknown Location");
+      setCountryName(reverseGeocode[0]?.country || "Unknown Country");
     }
   };
 

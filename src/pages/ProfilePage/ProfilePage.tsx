@@ -8,8 +8,9 @@ import {
   orderBy,
   QueryDocumentSnapshot,
   doc,
+  where,
 } from "firebase/firestore";
-import { db, auth } from "../../../firebase";
+import { db, auth, storage } from "../../../firebase";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -31,8 +32,10 @@ function ProfilePage() {
   const [profileImg, setProfileImg] = useState<string>("");
   const [bio, setBio] = useState<string>("");
   const [locationName, setLocationName] = useState<string>("");
+  
 
   useEffect(() => {
+
     const userDocRef = doc(db, `users`, userId);
 
     // Pobierz dane użytkownika
@@ -52,15 +55,14 @@ function ProfilePage() {
 
     const unsubscribePosts = onSnapshot(
       query(
-        collection(db, `posts/${userId}/userPosts`),
+        collection(db, 'posts'), //(db, `posts/${userId}/userPosts`)
+        where("userID", "==", userId),
         orderBy("timestamp", "desc")
       ),
       (snapshot) => {
         setPosts(
           snapshot.docs.map((doc: QueryDocumentSnapshot) => {
             const data = doc.data();
-            findLocationName(data.coords.latitude, data.coords.longitude);
-            console.log("LOCATION FROM PROFILEPAGE USEEFFECT: " + locationName);
             return {
               postID: doc.id,
               username: username,
@@ -70,7 +72,7 @@ function ProfilePage() {
               timestamp: data.timestamp,
               latitude: data.coords.latitude,
               longitude: data.coords.longitude,
-              locationName: locationName,
+              city: data.city
             };
           })
         );
