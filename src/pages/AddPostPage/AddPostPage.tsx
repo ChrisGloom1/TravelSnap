@@ -135,7 +135,7 @@ const AddPostPage = () => { //{item} : Props
   return (
     <LinearGradient style={{flex: 1, alignItems: "center", padding: 16}} colors={['#ffc0a0', '#ffe7a0']}>
       <Image source={{uri: image}} style={{width: "90%", aspectRatio: 1, marginTop: 32, marginBottom: 16, borderRadius: 12}}/>
-      <Text>{locationName}</Text>
+      <Text>{cityName}</Text>
       <Input onInputChange={setCaption} placeholderText='Add caption'/>
       <ButtonBlue label={loading ? "Uploading..." : "Upload"} onPress={uploadPost}/>
     </LinearGradient>

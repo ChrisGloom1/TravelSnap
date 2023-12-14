@@ -169,7 +169,7 @@ const FeedPost = ({
         <Text 
         // className="text-2xl ml-1"
         style={{fontSize: 24, marginLeft: 8}}
-        >📍 {locationName}</Text>
+        >📍 {city}</Text>
         <Text 
         // className="text-2xl ml-2"
         style={{fontSize: 24, marginLeft: 8}}

@@ -1,4 +1,4 @@
-import { Button, ScrollView, TextInput, View } from "react-native";
+import { Button, FlatList, ScrollView, TextInput, View } from "react-native";
 import FeedPost, { FeedPostProps } from "../FeedPost/FeedPost";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../../firebase";
+import GalleryPost from "../GalleryPost/GalleryPost";
 
 export type postsProps = {
   tabName: string;
@@ -150,7 +151,31 @@ const TabPosts = (props: postsProps) => {
       <View>
         {posts.map((post) => (
           <View key={Math.random()}>
-            <FeedPost
+
+          <FlatList
+            numColumns={3}
+            data={posts}
+            keyExtractor={(item) => item.postID.toString()}
+            refreshing={false}
+            onRefresh={() => console.log("Refreshed")}
+            style={{height: "100%"}}
+            renderItem={({ item }) => (
+              <GalleryPost
+              key={item.postID}
+              postID={item.postID}
+              username={item.username}
+              userImage={item.userImage}
+              image={item.image}
+              caption={item.caption}
+              timestamp={item.timestamp}
+              latitude={item.latitude}
+              longitude={item.longitude}
+              locationName={item.city}
+            />
+          )}
+        />
+
+            {/* <FeedPost
               key={post.postID}
               postID={post.postID}
               userImage={post.userImage}
@@ -161,8 +186,8 @@ const TabPosts = (props: postsProps) => {
               longitude={post.longitude}
               timestamp={post.timestamp}
               city={post.city}
-            />
-            <MapView
+            /> */}
+            {/* <MapView
               style={{ height: 200 }}
               key={Math.random()}
               initialRegion={{
@@ -182,7 +207,7 @@ const TabPosts = (props: postsProps) => {
                   identifier="Photo location"
                 />
               )}
-            </MapView>
+            </MapView> */}
           </View>
         ))}
       </View>

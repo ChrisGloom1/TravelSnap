@@ -143,28 +143,7 @@ function ProfilePage() {
           </View>
           <View style={{borderBottomColor: '#ccc', borderBottomWidth: 1}}/>
 
-          <FlatList
-            numColumns={3}
-            data={posts}
-            keyExtractor={(item) => item.postID.toString()}
-            refreshing={false}
-            onRefresh={() => console.log("Refreshed")}
-            style={{height: "100%"}}
-            renderItem={({ item }) => (
-              <GalleryPost
-              key={item.postID}
-              postID={item.postID}
-              username={item.username}
-              userImage={item.userImage}
-              image={item.image}
-              caption={item.caption}
-              timestamp={item.timestamp}
-              latitude={item.latitude}
-              longitude={item.longitude}
-              locationName={item.locationName}
-            />
-          )}
-        />
+
       </View>
     </LinearGradient>
   );
