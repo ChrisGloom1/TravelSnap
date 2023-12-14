@@ -95,7 +95,7 @@ function ProfilePage() {
   };
 
   return (
-    <LinearGradient colors={['#ffc0a0', '#ffe7a0']} style={{height: 200}}>
+    <LinearGradient colors={['#ffc0a066', '#ffe7a066']} style={{height: 200}}>
       <View>
         <View style={{}}>
           <View 
