@@ -38,6 +38,7 @@ import { useEffect, useState } from "react";
 import {
   QueryDocumentSnapshot,
   collection,
+  count,
   onSnapshot,
   or,
   orderBy,
@@ -90,11 +91,11 @@ const TabPosts = (props: postsProps) => {
       };
 
     } else if (props.tabName == "Nearby") {
-      setPosts([]);
+      // setPosts([]);
         const unsubscribePosts = onSnapshot(
             query(
               collection(db, "posts"),
-              where("country", "==", "Polska"),
+              where("country", "==", props.countryName),
               orderBy("timestamp", "desc")
             ),
             (snapshot) => {
