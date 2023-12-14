@@ -251,7 +251,7 @@ const ImageDetailPage = () => {
 
         <View style={{paddingHorizontal: 8, paddingVertical: 4, justifyContent: "center"}}>
           <View style={{display: "flex", flexDirection: "row", alignItems: "center", width: "90%"}}>
-            <Image source={{ uri: userImage }} style={{width: 32, height: 32, borderRadius: 16, marginTop: -18 }}/>
+            <Image source={{ uri: commentersProfileImg }} style={{width: 32, height: 32, borderRadius: 16, marginTop: -18 }}/>
             <Input
               value={comment}
               onChangeText={setComment}
@@ -272,9 +272,9 @@ const ImageDetailPage = () => {
                 <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between", paddingVertical: 16}}>
 
                   <View style={{flexDirection: "row"}}>
-                    <Image source={{ uri: commentersProfileImg }} style={{width: 32, height: 32, borderRadius: 16}}/>
+                    <Image source={{ uri: comment.data().profileImg }} style={{width: 32, height: 32, borderRadius: 16}}/>
                     <Text style={{paddingHorizontal: 8, width: "85%"}}>
-                      <Text style={{fontWeight: 'bold'}}>{commentersUsername} </Text>
+                      <Text style={{fontWeight: 'bold'}}>{comment.data().username} </Text>
                       {comment.data().comment}
                     </Text>
                   </View>

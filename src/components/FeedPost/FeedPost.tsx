@@ -125,47 +125,23 @@ const FeedPost = ({
   };
 
   return (
-    <View 
-    // className="h-screen justify-center bg-gray-100"
-    style={{height: "100%", justifyContent: 'center', backgroundColor: '#f0f0f0'}}
-    >
-      <View 
-      // className="w-full"
-      style={{width: '100%'}}
-      >
-        <View 
-        // className="flex-row pr-2 pl-2 pt-1 pb-1"
-        style={{flexDirection: 'row', paddingHorizontal: 8, paddingVertical: 4}}
-        >
+    <View style={{height: "100%", justifyContent: 'center', backgroundColor: '#f0f0f0'}}>
+      <View style={{width: '100%'}}>
+        <View style={{flexDirection: 'row', paddingHorizontal: 8, paddingVertical: 4}}>
           <Image
             source={{
               uri: userImage,
             }}
-            // className="w-8 h-8 rounded-full"
             style={{width: 32, height: 32, borderRadius: 16}}
           />
-          <Text 
-          // className="text-lg pl-2"
-          style={{fontSize: 16, paddingLeft: 8}}
-          >{username}</Text>
+          <Text style={{fontSize: 16, paddingLeft: 8}}>{username}</Text>
         </View>
         <Image source={{ uri: image }} 
-        // className="w-full h-[450]" 
         style={{width: '100%', height: 450}}
         />
       </View>
-      <View 
-      // className="flex-row pr-2 pl-2 pt-1 pb-1"
-      style={{flexDirection: 'row', paddingHorizontal: 8, paddingVertical: 4}}
-      >
-        {/* <TouchableOpacity onPress={handleLikePress}>
-          {postLiked ? <Text className="text-2xl ml-2">💜</Text> : <Text className="text-2xl ml-2">🤍</Text>}
-          
-        </TouchableOpacity> */}
-        <Text 
-        // className="text-2xl ml-2"
-        style={{fontSize: 24, marginLeft: 8}}
-        >💬</Text>
+      <View style={{flexDirection: 'row', paddingHorizontal: 8, paddingVertical: 4}}>
+        <Text style={{fontSize: 24, marginLeft: 8}}>💬</Text>
         <Text 
         // className="text-2xl ml-1"
         style={{fontSize: 24, marginLeft: 8}}
