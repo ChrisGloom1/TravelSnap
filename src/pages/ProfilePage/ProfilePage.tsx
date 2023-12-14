@@ -246,7 +246,10 @@ function ProfilePage() {
       <ScrollView>
         <LinearGradient colors={['#ffc0a0', '#ffe7a0']}>
           <View>
-            <View className="flex flex-row justify-between">
+            <View 
+            // className="flex flex-row justify-between"
+            style={{display: "flex", flexDirection: 'row', justifyContent: 'space-between'}}
+            >
               <ButtonBlue
                 label="Log out"
                 onPress={() => console.log("Log out pressed")}
@@ -262,22 +265,43 @@ function ProfilePage() {
                 onPress={() => navigation.navigate("ProfileSetupPage")}
               />
             </View>
-          <View className="flex-1 flex-row p-4 justify-between">
+          <View 
+          // className="flex-1 flex-row p-4 justify-between"
+          style={{display: "flex", flexDirection: 'row', padding: 16, justifyContent: 'space-between'}}
+          >
             <View>
-              <Image source={{ uri: profileImg }} className="w-28 h-28 rounded-full mb-2" />
+              <Image source={{ uri: profileImg }} 
+              // className="w-28 h-28 rounded-full mb-2" 
+              style={{width: 112, height: 112, borderRadius: "50%", marginBottom: 8}}
+              />
             </View>
-            <View className="ml-4 flex-1">
-              <Text className="font-bold text-xl mb-1">{username}</Text>
-              <View className="">
-                <Text className="font-bold">About: 
-                  <Text className="font-normal"> {bio}</Text>
+            <View 
+            // className="ml-4 flex-1"
+            style={{marginLeft: 16, flex: 1}}
+            >
+              <Text 
+              // className="font-bold text-xl mb-1"
+              style={{fontWeight: 'bold', fontSize: 24, marginBottom: 4}}
+              >{username}</Text>
+              <View>
+                <Text 
+                // className="font-bold"
+                style={{fontWeight: 'bold'}}
+                >About: 
+                  <Text 
+                  // className="font-normal"
+                  style={{fontWeight: 'normal'}}
+                  > {bio}</Text>
                 </Text>
               </View>
               </View>
             </View>
           </View>
         </LinearGradient>
-        <View className="border-b border-gray-400"/>
+        <View 
+        // className="border-b border-gray-400"
+        style={{borderBottomColor: 'gray', borderBottomWidth: 1}}
+        />
 
         {/* Mer kode under det som er kommentert ut */}
 
@@ -345,12 +369,18 @@ function ProfilePage() {
         )}
       />
       ) : (
-        <View className="items-center justify-center mt-24">
+        <View 
+        // className="items-center justify-center mt-24"
+        style={{alignItems: 'center', justifyContent: 'center', marginTop: 96}}
+        >
           <Icon 
             name="camera-off"
             size={50}
           />
-          <Text className="p-2">No posts yet</Text>
+          <Text 
+          // className="p-2"
+          style={{padding: 8}}
+          >No posts yet</Text>
         </View>
       )}
   </View>

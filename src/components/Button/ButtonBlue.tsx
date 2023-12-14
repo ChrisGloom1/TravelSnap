@@ -11,8 +11,7 @@ const ButtonBlue: React.FC<TButtonProps> = ({ label, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <LinearGradient 
-        className="bg-white rounded-xl px-6 py-3 mx-4"
-        style={{elevation: 2}}
+        style={{backgroundColor: 'white', borderRadius: 20, paddingHorizontal: 32, paddingVertical: 14, margin: 10}}
         colors={['#a0cbff', '#a0b9ff']}
       >
         <Text>{label}</Text>
