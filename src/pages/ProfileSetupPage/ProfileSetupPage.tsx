@@ -19,6 +19,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../components/Navigation/RootNavigator";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import * as Location from "expo-location";
+import { LinearGradient } from "expo-linear-gradient";
 
 export type ProfileSetupScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabStackParamList, "Home">,
@@ -147,35 +148,27 @@ const ProfileSetupPage = () => {
   // };
 
   return (
-    <View 
-      // className="flex-1 items-center justify-center bg-gray-100"
-      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+    <LinearGradient 
+      style={{display: "flex", alignItems: 'center'}}
+      colors={['#ffc0a066', '#ffe7a066']}
       >
       <View 
-        // className=" w-[90%] h-[85%] items-center justify-center pt-9"
-        style={{width: '90%', height: '85%', alignItems: 'center', justifyContent: 'center', paddingTop: 36}}
+        style={{width: '90%', height: '100%', alignItems: 'center', marginTop: 32}}
       >
-        <WelcomeToTravelSnap />
         <SetupProfileImage onPress={pickImage} image={image || ""} />
-        {/* <Input
-          placeholderText="Username"
-          onInputChange={handleUsernameChange}
-        /> */}
         <Text 
-          // className="mr-2"
           style={{marginRight: 8}}
         >
           {generalLocation}
         </Text>
         <Input placeholderText="Bio" onInputChange={handleBioChange} />
         <View 
-          // className="flex items-center"
           style={{flexDirection: 'row', alignItems: 'center'}}
         >
           <ButtonBlue label="Continue" onPress={handleProfileUpdate} />
         </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
