@@ -91,11 +91,11 @@ const ImageDetailPage = ({}) => {
           <Text 
           // className="ml-1 text-md"
           style={{marginLeft: 8, fontSize: 16}}
-          >Klodzko</Text>
+          >{cityName}</Text>
           <Text 
           // className="text-gray-700"
           style={{color: 'gray'}}
-          >22.11.23</Text>
+          >{JSON.stringify(timestamp)}</Text>
         </View>
       </View>
 
