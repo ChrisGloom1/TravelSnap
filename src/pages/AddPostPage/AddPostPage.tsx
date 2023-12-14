@@ -11,8 +11,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Input from '../../components/Input/Input';
 import * as Location from "expo-location";
 import { LinearGradient } from 'expo-linear-gradient';
-import ButtonBlue from '../../components/Button/ButtonBlue';
-import WelcomeToTravelSnap from '../../components/WelcomeToTravelSnap/WelcomeToTravelSnap';
+import ButtonBlue from "../../components/Button/ButtonBlue"
 
 type AddPostScreenRouteProp = RouteProp<RootStackParamList, "AddPost">;
 
@@ -27,6 +26,7 @@ const AddPostPage = () => { //{item} : Props
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState<string>('');
   const [location, setLocation] = useState<Location.LocationObject>();
+  const [locationName, setLocationName] = useState<string>("");
 
   useEffect(() => {
     (async () => {
@@ -38,9 +38,21 @@ const AddPostPage = () => { //{item} : Props
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log("LOCATION FROM ADDPOST USEEFFECT: " + location);
+      console.log("LOCATION FROM ADDPOST USEEFFECT: " + JSON.stringify(location))
+      findLocationName(location.coords.latitude, location.coords.longitude);
     })();
   }, [location])
+
+  const findLocationName = async (lat: number, long: number) => {
+    let reverseGeocode = await Location.reverseGeocodeAsync({
+      latitude: lat,
+      longitude: long,
+    });
+
+    if (reverseGeocode && reverseGeocode.length > 0) {
+      setLocationName(reverseGeocode[0]?.city || "Unknown Location");
+    }
+  };
   
   const uploadPost = async () => {
     if (loading) return;
@@ -98,6 +110,7 @@ const AddPostPage = () => { //{item} : Props
   return (
     <LinearGradient style={{flex: 1, alignItems: "center", padding: 16}} colors={['#ffc0a0', '#ffe7a0']}>
       <Image source={{uri: image}} style={{width: "90%", aspectRatio: 1, marginTop: 32, marginBottom: 16, borderRadius: 12}}/>
+      <Text>{locationName}</Text>
       <Input onInputChange={setCaption} placeholderText='Add caption'/>
       <ButtonBlue label={loading ? "Uploading..." : "Upload"} onPress={uploadPost}/>
     </LinearGradient>
