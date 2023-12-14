@@ -353,6 +353,8 @@ function ProfilePage() {
         data={posts}
         keyExtractor={(item) => item.postID.toString()}
         refreshing={false}
+        style={{ height: "72%"}}
+        onRefresh={() => console.log("Refreshed")}
         renderItem={({ item }) => (
           <GalleryPost
             key={item.postID}
