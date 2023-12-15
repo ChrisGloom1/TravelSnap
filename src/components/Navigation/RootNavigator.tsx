@@ -9,7 +9,6 @@ import ImageDetailPage from '../../pages/ImageDetailPage/ImageDetailPage';
 import { Timestamp } from '@firebase/firestore-types';
 
 export type RootStackParamList = {
-    LandingPage: undefined;
     ProfileSetupPage: undefined;
     Main: undefined;
     Register: undefined;
