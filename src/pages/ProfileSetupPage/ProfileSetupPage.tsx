@@ -5,7 +5,6 @@ import {
 import Input from "../../components/Input/Input";
 import ButtonBlue from "../../components/Button/ButtonBlue";
 import SetupProfileImage from "../../components/SetupProfileImage/SetupProfileImage";
-import WelcomeToTravelSnap from "../../components/WelcomeToTravelSnap/WelcomeToTravelSnap";
 import * as ImagePicker from "expo-image-picker";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage, auth, db } from "../../../firebase";
@@ -28,17 +27,11 @@ export type ProfileSetupScreenNavigationProp = CompositeNavigationProp<
 
 const ProfileSetupPage = () => {
   const navigation = useNavigation<ProfileSetupScreenNavigationProp>();
-  // SKIP THESE ???
-  // const [emailValue, setEmailValue] = useState<string>("");
-  // const [passwordValue, setPasswordValue] = useState<string>("");
-  // const [confirmPasswordValue, setConfirmPasswordValue] = useState<string>("")
-  // const [username, setUsername] = useState<string>();
   const [hasGalleryPermission, setHasGalleryPermission] =
     useState<Boolean | null>(null);
   const [image, setImage] = useState<string | null>(null);
   const [location, setLocation] = useState<Location.LocationObject>();
   const [bio, setBio] = useState<string>();
-  //const [address, setAddress] = useState<string>("");
   const [generalLocation, setGeneralLocation] = useState<string>("");
   const [isBioChanged, setIsBioChanged] = useState<boolean>(false);
   const [isImageChanged, setIsImageChanged] = useState<boolean>(false);
@@ -47,7 +40,6 @@ const ProfileSetupPage = () => {
 
   useEffect(() => {
     (async () => {
-      // check for image picker permissions
       const galleryStatus =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       setHasGalleryPermission(galleryStatus.status === "granted");
@@ -60,7 +52,6 @@ const ProfileSetupPage = () => {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log("LOCATION FROM PROFILESETUP USEEFFECT: " + location);
 
       let reverseGeocode = await Location.reverseGeocodeAsync({
         latitude: location.coords.latitude,
@@ -97,9 +88,6 @@ const ProfileSetupPage = () => {
     return <Text>No access to gallery</Text>;
   }
 
-  // const handleUsernameChange = (text: string) => {
-  //   setUsername(text);
-  // };
   const handleBioChange = async (text: string) => {
     setBio(text);
     setIsBioChanged(true);
@@ -118,24 +106,16 @@ const ProfileSetupPage = () => {
       });
     }
 
-    // if (username != "") {
-    //   await updateDoc(doc(db, "users", userID), {
-    //     username: username,
-    //   });
-    // }
     const imageRef = ref(storage, `users/${userID}/profileImg`);
     const response = await fetch(image!);
     const blob = await response.blob();
 
-    // 3. Determine file type of the image (f.ex. image/jpeg)
     const metadata = {
       contentType: "image/jpeg",
     };
 
-    // 4. Send image's binary data into Firebase Storage
     await uploadBytes(imageRef, blob, metadata);
 
-    // 5. Get a download URL from Firebase Storage and update the original post w/image
     const downloadURL = await getDownloadURL(imageRef);
 
     await updateDoc(doc(db, "users", userID), {
@@ -143,36 +123,14 @@ const ProfileSetupPage = () => {
     });
     navigation.navigate("Main");
   };
-  // const handleLoginPress = () => {
-  //   // insert login logic here
-  //   console.log(
-  //     "user: " +
-  //       emailValue +
-  //       " \npass: " +
-  //       passwordValue +
-  //       " \nconfirm pass: " +
-  //       confirmPasswordValue
-  //   );
-  // };
 
   return (
-    <LinearGradient 
-      style={{display: "flex", alignItems: 'center'}}
-      colors={['#ffc0a066', '#ffe7a066']}
-      >
-      <View 
-        style={{width: '90%', height: '100%', alignItems: 'center', marginTop: 32}}
-      >
+    <LinearGradient style={{display: "flex", alignItems: 'center'}} colors={['#ffc0a066', '#ffe7a066']}>
+      <View style={{width: '90%', height: '100%', alignItems: 'center', marginTop: 32}}>
         <SetupProfileImage onPress={pickImage} image={image || ""} />
-        <Text 
-          style={{marginRight: 8}}
-        >
-          {generalLocation}
-        </Text>
+        <Text style={{marginRight: 8}}>{ generalLocation }</Text>
         <Input placeholderText="Bio" onInputChange={handleBioChange} />
-        <View 
-          style={{flexDirection: 'row', alignItems: 'center'}}
-        >
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <ButtonBlue label="Continue" onPress={handleProfileUpdate} />
         </View>
       </View>

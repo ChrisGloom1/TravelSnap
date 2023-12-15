@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { ImageBackground, View } from "react-native"
 import { TouchableOpacity, Text } from "react-native"
 

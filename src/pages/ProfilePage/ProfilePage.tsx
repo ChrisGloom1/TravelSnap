@@ -46,9 +46,6 @@ function ProfilePage() {
         setProfileImg(userData?.profileImg || "");
         setBio(userData?.profileBio || "");
       } else {
-        console.log(
-          "User document does not exist SO I CANNOT GET USERNAME GRHHH!"
-        );
         setUsername("");
       }
     });
@@ -99,7 +96,6 @@ function ProfilePage() {
 
   const handleLogout = async () => {
     await signOut(auth).then(() => {
-      // Sign-out successful.
       navigation.navigate('Login')
     }).catch((error) => {
       console.log(error)
@@ -111,27 +107,15 @@ function ProfilePage() {
       <View>
         <View>
           <View style={{display: "flex", flexDirection: 'row', justifyContent: 'space-between'}}>
-            <ButtonBlue
-              label="Log out"
-              onPress={() => handleLogout()}
-            />
-            <ButtonBlue
-              label="Edit profile"
-              onPress={() => navigation.navigate("ProfileSetupPage")}
-            />
+            <ButtonBlue label="Log out" onPress={() => handleLogout()}/>
+            <ButtonBlue label="Edit profile" onPress={() => navigation.navigate("ProfileSetupPage")}/>
           </View>
           <View style={{display: "flex", flexDirection: 'row', padding: 16, justifyContent: 'space-between'}}>
             <View style={{height: 100}}>
               {profileImg ? 
-                <Image 
-                source={{ uri: profileImg }} 
-                style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}
-                /> 
+                <Image source={{ uri: profileImg }} style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}/> 
                 : 
-                <Image 
-                source={require('../../../assets/avatar.png')}
-                style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}
-                /> }
+                <Image source={require('../../../assets/avatar.png')} style={{width: 112, height: 112, borderRadius: 56, marginBottom: 8}}/> }
             </View>
             <View style={{marginLeft: 16, flex: 1}}>
               <Text style={{fontWeight: 'bold', fontSize: 24, marginBottom: 4}}>{username}</Text>

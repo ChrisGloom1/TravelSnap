@@ -33,7 +33,6 @@ const ExplorePage = () => {
 
         if (reverseGeocode && reverseGeocode.length > 0) {
           setCountryName(reverseGeocode[0]?.country || "Unknown Location");
-          console.log("Here comes the country from Near Tab: " + countryName)
         }
         })();
   }, [countryName])

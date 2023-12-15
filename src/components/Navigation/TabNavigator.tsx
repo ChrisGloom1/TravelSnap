@@ -9,7 +9,7 @@ import CameraComponent from "../CameraComponent/CameraComponent";
 
 export type TabStackParamList = {
   Main: undefined;
-  Profile: undefined; // TODO - add param userId for inlogged user
+  Profile: undefined;
   AddPhoto: undefined;
   Explore: undefined;
 };
@@ -27,7 +27,6 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator
-      
       screenOptions={({ route }) => ({
         tabBarStyle: { backgroundColor: "#ffefbf" },
         tabBarActiveTintColor: "#ff6b22",

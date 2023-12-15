@@ -1,4 +1,4 @@
-import { View, Text, Image, Button } from 'react-native'
+import { Text, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { RootStackParamList } from '../../components/Navigation/RootNavigator';
 import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
@@ -6,7 +6,7 @@ import { TabStackParamList } from '../../components/Navigation/TabNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import { db, storage, auth } from "../../../firebase";
-import { addDoc, collection, serverTimestamp, updateDoc, doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, updateDoc, doc, onSnapshot } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Input from '../../components/Input/Input';
 import * as Location from "expo-location";
@@ -20,7 +20,7 @@ BottomTabNavigationProp<TabStackParamList, "AddPhoto">,
 NativeStackNavigationProp<RootStackParamList>
 >
 
-const AddPostPage = () => { //{item} : Props
+const AddPostPage = () => {
   const navigation = useNavigation<AddPhotoScreenNavigationProp>();
   const {params: {image}} = useRoute<AddPostScreenRouteProp>();
   const [loading, setLoading] = useState(false);
@@ -41,11 +41,7 @@ const AddPostPage = () => { //{item} : Props
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log("LOCATION FROM ADDPOST USEEFFECT: " + location);
-
       findLocationName(location.coords.latitude, location.coords.longitude);
-
-      
     })();
 
     const unsubscribeUser = onSnapshot(
@@ -75,7 +71,7 @@ const AddPostPage = () => { //{item} : Props
     const coords = { latitude: location.coords.latitude, longitude: location.coords.longitude,}
 
     try {
-      // 1. Create a post and add it to firestore 'posts' collection
+      // Create a post and add it to firestore 'posts' collection
       const userPostsRef = collection(db, 'posts'); // (db, 'posts', userId, 'userPosts')
       const docRef = await addDoc(userPostsRef, {
         userID: auth.currentUser!.uid,
@@ -88,26 +84,24 @@ const AddPostPage = () => { //{item} : Props
         country: countryName
       });
 
-      console.log("New post added with ID", docRef.id);
-
-      // 2. Upload the image to firebase storage with the post ID
-      const imageRef = ref(storage, `posts/${docRef.id}/image`); //(storage, `posts/${userId}/userPosts/${docRef.id}/image`)
+      // Upload the image to firebase storage with the post ID
+      const imageRef = ref(storage, `posts/${docRef.id}/image`)
 
       const response = await fetch(image);
       const blob = await response.blob();
 
-      // 3. Determine file type of the image (f.ex. image/jpeg)
+      // Determine file type of the image
       const metadata = {
         contentType: "image/jpeg"
       };
 
-      // 4. Send image's binary data into Firebase Storage
+      // Send image's binary data into Firebase Storage
       await uploadBytes(imageRef, blob, metadata);
 
-      // 5. Get a download URL from Firebase Storage and update the original post w/image
+      // Get a download URL from Firebase Storage and update the original post w/image
       const downloadURL = await getDownloadURL(imageRef);
 
-      await updateDoc(doc(db, 'posts', docRef.id), { //(db, 'posts', userId, 'userPosts', docRef.id)
+      await updateDoc(doc(db, 'posts', docRef.id), {
         image: downloadURL
       });
 

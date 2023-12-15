@@ -1,11 +1,8 @@
-import { View, Text, Image } from "react-native"
+import { View, Image } from "react-native"
 
 const WelcomeToTravelSnap = () => {
   return (
-    <View 
-      // className="flex-1 justify-center items-center"
-      style={{display: "flex", justifyContent: 'center', alignItems: 'center'}}
-    >
+    <View style={{display: "flex", justifyContent: 'center', alignItems: 'center'}}>
       <Image 
         source={require('../../../assets/liggendelogo.png')}
         style={{ width: 300, height: 50, marginBottom: 32 }}

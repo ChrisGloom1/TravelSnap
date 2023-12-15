@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { View, Text, TextInput, TouchableOpacity, NativeSyntheticEvent, TextInputChangeEventData } from "react-native"
+import { View, Text, TouchableOpacity } from "react-native"
 import ButtonBlue from "../../components/Button/ButtonBlue"
 import Input from "../../components/Input/Input"
 import WelcomeToTravelSnap from "../../components/WelcomeToTravelSnap/WelcomeToTravelSnap"
@@ -8,8 +8,6 @@ import { auth, db } from "../../../firebase";
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { TabStackParamList } from '../../components/Navigation/TabNavigator';
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../components/Navigation/RootNavigator";
 
@@ -40,7 +38,6 @@ const RegisterPage = () => {
     createUserWithEmailAndPassword(auth, emailValue.trim(), passwordValue)
       .then(async userCredentials => {
           const user = userCredentials.user;
-          console.log('Registered with: ', user.email + 'password: ', passwordValue + " \nconfirm pass: " + confirmPasswordValue);
           const userDocRef = doc(db, 'users', user.uid);
     
           await setDoc(userDocRef, {
@@ -48,7 +45,6 @@ const RegisterPage = () => {
             username: usernameValue,
             profileImg: null
           })
-          console.log("New user added with id: ", userDocRef.id)
           navigation.navigate("ProfileSetupPage");
         })
         .catch(error => alert(error.message))
@@ -56,29 +52,15 @@ const RegisterPage = () => {
 
   const goToLoginPage = () => {
     navigation.navigate('Login');
-    console.log("go to login page");
   }
 
   return (
-    <LinearGradient 
-    // className="flex-1 items-center justify-center bg-gray-100"
-    style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-    colors={['#ffc0a0', '#ffe7a0']}
-  >
-      <View 
-        // className=" w-[90%] h-[85%] items-center justify-center mt-9"
-        style={{width: '90%', height: '85%', alignItems: 'center', justifyContent: 'center', marginTop: 36}}
-      >
+    <LinearGradient style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} colors={['#ffc0a0', '#ffe7a0']}>
+      <View style={{width: '90%', height: '85%', alignItems: 'center', justifyContent: 'center', marginTop: 36}}>
         <WelcomeToTravelSnap />
         <Text>Register</Text>
-        <Input 
-          placeholderText="Email" 
-          onInputChange={handleEmailChange}
-        />
-        <Input 
-          placeholderText="Username" 
-          onInputChange={handleUsernameChange}
-        />
+        <Input placeholderText="Email" onInputChange={handleEmailChange}/>
+        <Input placeholderText="Username" onInputChange={handleUsernameChange}/>
         <Input 
           placeholderText="Password" 
           onInputChange={handlePasswordChange}
@@ -90,20 +72,11 @@ const RegisterPage = () => {
           secureTextEntry={true}
         />
 
-        <View 
-          // className="flex-1 items-center"
-          style={{flex: 1, alignItems: 'center'}}
-        >
+        <View style={{flex: 1, alignItems: 'center'}}>
           <TouchableOpacity onPress={goToLoginPage}>
-            <Text 
-            // className="p-4 text-gray-700 font-bold"
-            style={{padding: 4, color: 'gray', fontWeight: 'bold'}}
-            >Already have a user? Click here to log in</Text>
+            <Text style={{padding: 4, color: 'gray', fontWeight: 'bold'}}>Already have a user? Click here to log in</Text>
           </TouchableOpacity>
-          <ButtonBlue 
-            label="Register"
-            onPress={handleRegisterPress}
-          />
+          <ButtonBlue label="Register" onPress={handleRegisterPress}/>
         </View>
       </View>
     </LinearGradient>

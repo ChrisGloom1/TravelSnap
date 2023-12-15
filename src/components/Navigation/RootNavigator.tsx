@@ -4,7 +4,6 @@ import TabNavigator from './TabNavigator';
 import AddPostPage from '../../pages/AddPostPage/AddPostPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
-import LandingPage from '../../pages/LandingPage/LandingPage';
 import ProfileSetupPage from '../../pages/ProfileSetupPage/ProfileSetupPage';
 import ImageDetailPage from '../../pages/ImageDetailPage/ImageDetailPage';
 import { Timestamp } from '@firebase/firestore-types';
@@ -26,7 +25,6 @@ const RootNavigator = () => {
   return (
     <RootStack.Navigator initialRouteName='Login' screenOptions={{headerStyle: {backgroundColor: "#ffc0a0"}}} >
       
-      <RootStack.Screen name="LandingPage" component={LandingPage}/>
       <RootStack.Screen name="ProfileSetupPage" component={ProfileSetupPage}/>
       <RootStack.Screen name="ImageDetail" component={ImageDetailPage}/>
 

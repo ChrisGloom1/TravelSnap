@@ -1,38 +1,5 @@
-            {/* <FeedPost
-              key={post.postID}
-              postID={post.postID}
-              userImage={post.userImage}
-              image={post.image}
-              caption={post.caption}
-              username={post.username}
-              latitude={post.latitude}
-              longitude={post.longitude}
-              timestamp={post.timestamp}
-              city={post.city}
-            /> */}
-            {/* <MapView
-              style={{ height: 200 }}
-              key={Math.random()}
-              initialRegion={{
-                latitude: post.latitude,
-                longitude: post.longitude,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.005,
-              }}
-            >
-              {post.latitude && post.longitude && (
-                <Marker
-                  coordinate={{
-                    latitude: post.latitude,
-                    longitude: post.longitude,
-                  }}
-                  title="Photo location"
-                  identifier="Photo location"
-                />
-              )}
-            </MapView> */}
-import { Button, FlatList, ScrollView, TextInput, View } from "react-native";
-import FeedPost, { FeedPostProps } from "../FeedPost/FeedPost";
+import { FlatList, View } from "react-native";
+import { FeedPostProps } from "../FeedPost/FeedPost";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 import {
@@ -91,7 +58,6 @@ const TabPosts = (props: postsProps) => {
       };
 
     } else if (props.tabName == "Nearby") {
-      // setPosts([]);
         const unsubscribePosts = onSnapshot(
             query(
               collection(db, "posts"),
@@ -175,15 +141,9 @@ const TabPosts = (props: postsProps) => {
     <LinearGradient colors={['#ffc0a066', '#ffe7a066']} style={{height: "100%"}}>
 
       {isFromSearchBar && (
-          <View>
-        <Input
-          placeholderText="Search posts..."
-          onInputChange={(text) => setSearchKeyword(text)}
-        />
-        <ButtonBlue
-          label="Search"
-          onPress={() => {searchPostsByKeyword(searchKeyword)}}
-        />
+        <View>
+          <Input placeholderText="Search 'Oslo' or 'Norway'" onInputChange={(text) => setSearchKeyword(text)}/>
+          <ButtonBlue label="Search" onPress={() => {searchPostsByKeyword(searchKeyword)}}/>
         </View>
       )}
 
@@ -211,8 +171,8 @@ const TabPosts = (props: postsProps) => {
                 longitude={item.longitude}
                 locationName={item.city}
               />
-            )}
-         />
+              )}
+            />
           </View>
         ))}
       </View>

@@ -68,26 +68,6 @@ const FeedPost = ({
     };
   }, [db]);
 
-  // const fetchCommentersData = async (userID: string) => {
-  //   const userDocRef = doc(db, `users`, userID);
-
-  //   const unsubscribeUser = await onSnapshot(userDocRef, (userDocSnapshot) => {
-  //     if (userDocSnapshot.exists()) {
-  //       const userData = userDocSnapshot.data();
-  //       setCommentersUsername(userData?.username || "");
-  //       setCommentersProfileImg(userData?.profileImg || "");
-  //     } else {
-  //       console.log(
-  //         "User document does not exist SO I CANNOT GET USERNAME GRHHH!"
-  //       );
-  //       setCommentersUsername("unknown user");
-  //     }
-  //   });
-  //   return () => {
-  //     unsubscribeUser();
-  //   };
-  // }
-
   const convertTimestamp = (timestamp: Timestamp): string => {
     const date = timestamp.toDate();
 
@@ -117,8 +97,6 @@ const FeedPost = ({
 
       // Delete the comment document from the database
       await deleteDoc(commentDocRef);
-
-      console.log("Comment deleted successfully!");
     } catch (error) {
       console.error("Error deleting comment");
     }
@@ -128,91 +106,50 @@ const FeedPost = ({
     <View style={{height: "100%", justifyContent: 'center', backgroundColor: '#f0f0f0'}}>
       <View style={{width: '100%'}}>
         <View style={{flexDirection: 'row', paddingHorizontal: 8, paddingVertical: 4}}>
-          <Image
-            source={{
-              uri: userImage,
-            }}
-            style={{width: 32, height: 32, borderRadius: 16}}
-          />
+          <Image source={{ uri: userImage }} style={{width: 32, height: 32, borderRadius: 16}}/>
           <Text style={{fontSize: 16, paddingLeft: 8}}>{username}</Text>
         </View>
-        <Image source={{ uri: image }} 
-        style={{width: '100%', height: 450}}
-        />
+        <Image source={{ uri: image }} style={{width: '100%', height: 450}}/>
       </View>
       <View style={{flexDirection: 'row', paddingHorizontal: 8, paddingVertical: 4}}>
         <Text style={{fontSize: 24, marginLeft: 8}}>💬</Text>
-        <Text 
-        // className="text-2xl ml-1"
-        style={{fontSize: 24, marginLeft: 8}}
-        >📍 {city}</Text>
-        <Text 
-        // className="text-2xl ml-2"
-        style={{fontSize: 24, marginLeft: 8}}
-        >{convertTimestamp(timestamp)}</Text>
+        <Text style={{fontSize: 24, marginLeft: 8}}>📍 {city}</Text>
+        <Text style={{fontSize: 24, marginLeft: 8}}>{convertTimestamp(timestamp)}</Text>
       </View>
-      <View 
-      // className="justify-start pr-2 pl-2 pt-1 pb-1"
-      style={{paddingHorizontal: 8, paddingVertical: 4}}
-      >
-        <Text 
-        // className="mr-2"
-        style={{marginRight: 8}}
-        >
-          <Text 
-          // className="font-bold"
-          style={{fontWeight: 'bold'}}
-          > {username} </Text>
-          {caption}
-        </Text>
+      <View style={{paddingHorizontal: 8, paddingVertical: 4}}>
+        <Text style={{marginRight: 8}}>
+          <Text style={{fontWeight: 'bold'}}> {username} 
+          </Text>{caption}</Text>
       </View>
 
-      <View 
-      // className="justify-start pr-2 pl-2 pt-1 pb-1"
-      style={{paddingHorizontal: 8, paddingVertical: 4}}
-      >
-        <Image source={{ uri: commentersProfileImg }} 
-        // className="w-8 h-8 rounded-full" 
-        style={{width: 32, height: 32, borderRadius: 16}}
-        />
+      <View style={{paddingHorizontal: 8, paddingVertical: 4}}>
+        <Image source={{ uri: commentersProfileImg }} style={{width: 32, height: 32, borderRadius: 16}}/>
         <Input
           value={comment}
           onChangeText={setComment}
           placeholder="Add a comment..."
         />
-        <Button title="Add" disabled={!comment.trim()} onPress={sendComment} />
+        <Button 
+          title="Add" 
+          disabled={!comment.trim()} 
+          onPress={sendComment} 
+        />
       </View>
 
-      {/** COMMENTS */}
+      // comment section start
       {comments.length > 0 && (
-        <View 
-        // className="justify-start pr-2 pl-2 pt-1 pb-1"
-        style={{justifyContent: "flex-start", paddingHorizontal: 8, paddingVertical: 4}}
-        >
+        <View style={{justifyContent: "flex-start", paddingHorizontal: 8, paddingVertical: 4}}>
           {comments.map((comment) => (
             <View key={comment.id}>
-              <Image
-                source={{ uri: comment.data().profileImg }}
-                // className="w-8 h-8 rounded-full"
-                style={{width: 32, height: 32, borderRadius: 16}}
-              />
-              <Text 
-              // className="mr-2"
-              style={{marginRight: 8}}
-              >
-                <Text 
-                // className="font-bold"
-                style={{fontWeight: 'bold'}}
-                > {comment.data().username} </Text>
+              <Image source={{ uri: comment.data().profileImg }} style={{width: 32, height: 32, borderRadius: 16}}/>
+              <Text style={{marginRight: 8}}>
+                <Text style={{fontWeight: 'bold'}}> {comment.data().username} </Text>
                 {comment.data().comment}
               </Text>
               {commentersUsername == comment.data().username && (
                 <TouchableOpacity
-                  onPress={() => {
-                    deleteComment(comment.id);
-                  }}
-                >
-                  <Icon name="delete" type="antdesign" />
+                  onPress={() => {deleteComment(comment.id)}}>
+                  <Icon name="delete" type="antdesign"/>
                 </TouchableOpacity>
               )}
               <Moment element={Text} fromNow>
@@ -222,7 +159,7 @@ const FeedPost = ({
           ))}
         </View>
       )}
-      {/** COMMENTS END */}
+      // end of comment section
     </View>
   );
 };

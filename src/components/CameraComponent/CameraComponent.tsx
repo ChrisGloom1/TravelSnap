@@ -1,6 +1,6 @@
 import { Camera, CameraType } from "expo-camera";
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import { Button } from "react-native-paper"
 import * as ImagePicker from "expo-image-picker";
 import { CompositeNavigationProp, RouteProp, useNavigation } from "@react-navigation/native";
@@ -32,10 +32,8 @@ const CameraComponent = () => {
 
   useEffect(() => {
     (async () => {
-      // check for camera permissions
       const cameraStatus = await Camera.requestCameraPermissionsAsync();
       setHasCameraPermission(cameraStatus.status === "granted");
-      // check for image picker permissions
       const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync()
       setHasGalleryPermission(galleryStatus.status === "granted");
     })();
@@ -50,22 +48,17 @@ const CameraComponent = () => {
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
+      // Images only, no other media to be uploaded
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1,1],
       quality: 1
     })
-    console.log(result)
-
     if (!result.canceled) {
-      // setImage(result.assets[0].uri)
       setImage(result.assets[0].uri)
     }
   }
-  
-  const printImageData = (image: string) => {
-    console.log(image)
-  }
+
 
   if (hasCameraPermission === null || hasGalleryPermission === null) {
     return <View />
@@ -75,63 +68,28 @@ const CameraComponent = () => {
   }
 
   return(
-    <LinearGradient 
-      // className="flex-1" colors={['#ffc0a066', '#ffe7a066']}
-      style={{flex: 1}}
-      colors={['#ffc0a066', '#ffe7a066']}
-      >
-      <View 
-      // className="flex-1 flex-row"
-      style={{flex: 1, flexDirection: 'row'}}
-      >
+    <LinearGradient style={{flex: 1}} colors={['#ffc0a066', '#ffe7a066']}>
+      <View style={{flex: 1, flexDirection: 'row'}} >
         <Camera 
-        ref={ref => setCamera(ref)}
-        // className="flex-1 aspect-square" 
-        style={{flex: 1, aspectRatio: 1}}
-        type={type} 
-        ratio="1:1"
+          ref={ref => setCamera(ref)}
+          style={{flex: 1, aspectRatio: 1}}
+          type={type} 
+          ratio="1:1"
         />
       </View>
         { 
-          image && <Image source={{uri: image}} 
-          // className="flex-1 mt-24 mb-8 ml-4 mr-4"
-          style={{flex: 1, marginTop: 96, marginBottom: 32, marginLeft: 12, marginRight: 12}}
-          /> 
+          image && <Image source={{uri: image}} style={{flex: 1, marginTop: 96, marginBottom: 32, marginLeft: 12, marginRight: 12}}/> 
         }
         { 
           image ? 
-          <View 
-          // className="flex-row justify-around mb-8"
-          style={{flexDirection: 'row', justifyContent: 'space-around', marginBottom: 32}}
-          >
-            <Button
-              mode="outlined"
-              onPress={() => setImage(null)}
-            >
-              ❌
-            </Button>
-            <Button
-              mode="outlined"
-              //onPress={() => printImageData(image)}
-              onPress={() => navigation.navigate('AddPost', {image: image})}
-            >
-              ✅
-            </Button>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around', marginBottom: 32}}>
+            <Button mode="outlined" onPress={() => setImage(null)}>❌</Button>
+            <Button mode="outlined" onPress={() => navigation.navigate('AddPost', {image: image})}>✅</Button>
           </View>
           : 
-          <View 
-          // className="flex-row justify-around mb-8"
-          style={{flexDirection: 'row', justifyContent: 'space-around', marginBottom: 32}}
-          >
-            <Button
-            mode="outlined"
-            onPress={() => pickImage()}
-          >
-            🖼️
-          </Button>
-          <Button 
-            mode="outlined"
-            onPress={() => {
+          <View style={{flexDirection: 'row', justifyContent: 'space-around', marginBottom: 32}}>
+            <Button mode="outlined" onPress={() => pickImage()}>🖼️</Button>
+          <Button mode="outlined" onPress={() => {
               setType(
                 type === CameraType.back
                 ? CameraType.front
@@ -140,15 +98,9 @@ const CameraComponent = () => {
           }}>
             🔄
           </Button>
-          <Button
-            mode="outlined"
-            onPress={() => takePicture()}
-          >
-            📸
-          </Button>
+          <Button mode="outlined" onPress={() => takePicture()}>📸</Button>
           </View>
         }
-
       </LinearGradient>
   )
 }

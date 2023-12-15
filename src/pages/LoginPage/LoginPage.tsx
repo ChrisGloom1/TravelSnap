@@ -13,7 +13,7 @@ import { RootStackParamList } from "../../components/Navigation/RootNavigator"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export type LoginScreenNavigationProp = CompositeNavigationProp<
-BottomTabNavigationProp<TabStackParamList, "Home">,
+BottomTabNavigationProp<TabStackParamList, "Main">,
 NativeStackNavigationProp<RootStackParamList>
 >;
 
@@ -34,7 +34,7 @@ const LoginPage = () => {
     signInWithEmailAndPassword(auth, emailValue, passwordValue)
         .then(userCredentials => {
             const user = userCredentials.user
-            console.log('Logged in with ', user.email + "and pass: ", passwordValue)
+            console.log('Logged in with ', user.email)
             navigation.navigate('Main');
         })
         .catch(error => alert(error.message));
@@ -42,7 +42,6 @@ const LoginPage = () => {
 
   const goToRegisterPage = () => {
     navigation.navigate('Register');
-    console.log("go to register page");
   }
 
   return (
@@ -50,10 +49,7 @@ const LoginPage = () => {
       style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
       colors={['#ffc0a0', '#ffe7a0']}
     >
-      <View 
-      // className=" w-[90%] h-[85%] items-center justify-center mt-9"
-        style={{width: '90%', height: '85%', alignItems: 'center', justifyContent: 'center', marginTop: 36}}
-      >
+      <View style={{width: '90%', height: '85%', alignItems: 'center', justifyContent: 'center', marginTop: 36}}>
         <WelcomeToTravelSnap />
         <Text>Log in</Text>
         <Input 
