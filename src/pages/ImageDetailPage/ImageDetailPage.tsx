@@ -19,7 +19,8 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "../../components/Navigation/RootNavigator";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Location from "expo-location";
-import MapView, { Marker } from "react-native-maps";
+// uncomment this and code further down to check out the map on iOS/Android
+// import MapView, { Marker } from "react-native-maps";
 
 export type ImageDetailPageProps = {
   postID: string;
@@ -140,27 +141,28 @@ const ImageDetailPage = () => {
           <Text style={{marginRight: 8}}><Text style={{fontWeight: 'bold'}}>{username}</Text> {caption}</Text>
         </View>
 
-        <MapView
-              style={{ height: 200, margin: 12 }}
-              key={Math.random()}
-              initialRegion={{
+        // uncomment this code and in imports to check out maps on iOS/Android
+        {/* <MapView
+          style={{ height: 200, margin: 12 }}
+          key={Math.random()}
+          initialRegion={{
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
+          }}
+        >
+          {latitude && longitude && (
+            <Marker
+              coordinate={{
                 latitude: latitude,
                 longitude: longitude,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.005,
               }}
-            >
-              {latitude && longitude && (
-                <Marker
-                  coordinate={{
-                    latitude: latitude,
-                    longitude: longitude,
-                  }}
-                  title="Photo location"
-                  identifier="Photo location"
-                />
-              )}
-            </MapView>
+              title="Photo location"
+              identifier="Photo location"
+            />
+          )}
+        </MapView> */}
 
         <View style={{paddingHorizontal: 8, paddingVertical: 4, justifyContent: "center"}}>
           <View style={{display: "flex", flexDirection: "row", alignItems: "center", width: "90%"}}>
